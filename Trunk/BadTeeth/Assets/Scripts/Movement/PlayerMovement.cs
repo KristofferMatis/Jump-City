@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         };
 
 		m_Controller.Move (m_Velocity);
-        transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f)?0.0f:-1.0f);
+        transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
 	}
 
     void LateUpdate()

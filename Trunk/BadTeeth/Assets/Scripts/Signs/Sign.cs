@@ -5,18 +5,18 @@ public class Sign : MonoBehaviour
 {
     public enum SignType
     {
-        Hanging,
-        Poster,
-        BillBoard,
-        Welcome,
+		Poster,//smallest
+        Hanging,//smaller        
+        Welcome,//bigger
+		BillBoard,//biggest
         Count
     };
 
     public SignType m_SignType = SignType.Hanging;
 
-    static string[] MAIN_TEXTURES_FILE_PATHS = new string[]                 { "Textures/SignTextures/Hanging/Main",   "Textures/SignTextures/Poster/Main",    "Textures/SignTextures/BillBoard/Main",   "Textures/SignTextures/Welcome/Main"};
-    static string[] GRAFITI_TEXTURES_FILE_PATHS = new string[]              { "Textures/SignTextures/Hanging/Grafiti","Textures/SignTextures/Poster/Grafiti", "Textures/SignTextures/BillBoard/Grafiti","Textures/SignTextures/Welcome/Grafiti"};
-    static string[] GREYSCALE_GRAFITI_TEXTURES_FILE_PATHS = new string[]    { "Textures/SignTextures/Hanging/Mask",   "Textures/SignTextures/Poster/MAsk",    "Textures/SignTextures/BillBoard/Mask",   "Textures/SignTextures/Welcome/Mask"};
+	static string[] MAIN_TEXTURES_FILE_PATHS = new string[]                 { "Textures/SignTextures/Poster/Main",   "Textures/SignTextures/Hanging/Main",    "Textures/SignTextures/Welcome/Main",   "Textures/SignTextures/BillBoard/Main"};
+	static string[] GRAFITI_TEXTURES_FILE_PATHS = new string[]              { "Textures/SignTextures/Poster/Grafiti","Textures/SignTextures/Hanging/Grafiti", "Textures/SignTextures/Welcome/Grafiti","Textures/SignTextures/BillBoard/Grafiti"};
+	static string[] GREYSCALE_GRAFITI_TEXTURES_FILE_PATHS = new string[]    { "Textures/SignTextures/Poster/Mask",   "Textures/SignTextures/Hanging/Mask",    "Textures/SignTextures/Welcome/Mask",    "Textures/SignTextures/BillBoard/Mask"   };
 
     static Texture[][] m_MainTextures = new Texture[(int)SignType.Count][];
     static Texture[][] m_GrafitiTextures = new Texture[(int)SignType.Count][];
@@ -24,6 +24,11 @@ public class Sign : MonoBehaviour
 
 	public Material i_SourceMaterial;
     Material m_Material;
+
+	public bool m_IsFinished = false;
+
+	static float[] TIME_TO_PAINT = new float[]{ 1.0f, 1.5f, 2.0f, 3.0f };
+    public float m_PaintedTime = 0.0f;
 
 	// Use this for initialization
 	void Start () 
@@ -48,6 +53,8 @@ public class Sign : MonoBehaviour
         }
         m_Material.SetTexture("_GrafitiGreyScale", m_GrafitiTexturesGrayScale[(int)m_SignType][Random.Range(0, m_GrafitiTexturesGrayScale[(int)m_SignType].Length)]);
 
-       gameObject.renderer.material = m_Material;
+       	gameObject.renderer.material = m_Material;
+
+		gameObject.tag = "Sign";
 	}
 }
