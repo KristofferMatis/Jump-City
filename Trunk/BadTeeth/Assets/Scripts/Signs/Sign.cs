@@ -28,7 +28,44 @@ public class Sign : MonoBehaviour
 	public bool m_IsFinished = false;
 
 	static float[] TIME_TO_PAINT = new float[]{ 1.0f, 1.5f, 2.0f, 3.0f };
-    public float m_PaintedTime = 0.0f;
+    float m_PaintedTime = 0.0f;
+
+	public float PaintedTime
+	{
+		get{ return m_PaintedTime; }
+		set
+		{
+            if (value > TIME_TO_PAINT[(int)m_SignType])
+            {
+                m_PaintedTime = TIME_TO_PAINT[(int)m_SignType];
+                m_IsFinished = true;
+            }
+            else
+            {
+                m_PaintedTime = value;
+            }
+
+
+			m_Material.SetFloat("_PercentPainted", m_PaintedTime/TIME_TO_PAINT[(int)m_SignType]);
+
+			if(m_PaintedTime < TIME_TO_PAINT[(int)m_SignType])
+			{
+				updateLine();
+			}
+			else
+			{
+				if(m_LineRenderer != null)
+				{
+					Destroy(m_LineRenderer);
+					m_LineRenderer = null;
+				}
+			}
+		}
+	}
+
+    LineRenderer m_LineRenderer;
+    public Vector3 i_ProgressStart = new Vector3(-1.0f, 1.0f, 0.0f);
+    public Vector3 i_ProgressEnd = new Vector3(1.0f, 1.0f, 0.0f);
 
 	// Use this for initialization
 	void Start () 
@@ -56,5 +93,16 @@ public class Sign : MonoBehaviour
        	gameObject.renderer.material = m_Material;
 
 		gameObject.tag = "Sign";
+
+        m_LineRenderer = gameObject.GetComponent<LineRenderer>();
+		m_LineRenderer.SetPosition(0, transform.position + i_ProgressStart);
+		
+		PaintedTime = m_PaintedTime;
+	}
+
+
+	void updateLine()
+	{
+        m_LineRenderer.SetPosition(1, (transform.position + i_ProgressStart) + ((i_ProgressEnd - i_ProgressStart) * (m_PaintedTime / TIME_TO_PAINT[(int)m_SignType])));
 	}
 }

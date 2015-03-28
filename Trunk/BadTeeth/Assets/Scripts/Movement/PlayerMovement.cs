@@ -43,18 +43,35 @@ public class PlayerMovement : MonoBehaviour
 	bool m_CanAirJump = false;
     bool m_IsHodlingJump = false;
 
+	bool m_IsAllowedToMove = true;
+	public bool IsAllowedToMove
+	{
+		get { return m_IsAllowedToMove; }
+        set { m_IsAllowedToMove = value; }
+	}
+
+	bool m_FullStop = false;
+    public bool FullStop
+    {
+        get { return m_FullStop; }
+        set { m_FullStop = value; }
+    }
+
     #endregion
 
     // Use this for initialization
 	void Start () 
 	{
 		m_Controller = gameObject.GetComponent<CharacterController> ();
-        m_GroundedRaycastIgnoreMask = LayerMask.GetMask("Player");
+		m_GroundedRaycastIgnoreMask = LayerMask.GetMask("Player", "Ignore Raycast");
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+        if (m_FullStop)
+			return;
+
         switch (m_State)
         {
             case States.Airborne:
@@ -122,7 +139,12 @@ public class PlayerMovement : MonoBehaviour
             jump();
         }
 
-        m_Velocity.x = GROUNDED_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
+		m_Velocity.y -= Time.deltaTime * GRAVITY;
+
+		if(m_IsAllowedToMove)
+        	m_Velocity.x = GROUNDED_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
+		else
+			m_Velocity.x = 0.0f;
     }
 
     void exitGrounded()
@@ -178,7 +200,10 @@ public class PlayerMovement : MonoBehaviour
 
         m_Velocity.y -= Time.deltaTime * GRAVITY;
 
-        m_Velocity.x = AIRBORNE_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
+		if(m_IsAllowedToMove)
+        	m_Velocity.x = AIRBORNE_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
+		else
+			m_Velocity.x = 0.0f;
     }
 
     void exitAirborne()
@@ -204,6 +229,7 @@ public class PlayerMovement : MonoBehaviour
             if (m_Controller.isGrounded || Physics.Raycast(transform.position, Vector3.down, out hitInfo, GROUNDED_RAYCAST_DISTANCE, ~m_GroundedRaycastIgnoreMask.value))
             {
 				m_IsGroundedThisFrame = true;
+				m_Velocity.y = 0.0f;
             }
 			else
 			{
