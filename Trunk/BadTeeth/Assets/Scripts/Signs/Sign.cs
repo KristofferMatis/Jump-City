@@ -8,18 +8,19 @@ public class Sign : MonoBehaviour
         Hanging,
         Poster,
         BillBoard,
-        Welcome
+        Welcome,
+        Count
     };
 
     public SignType m_SignType = SignType.Hanging;
 
-    string[] MAIN_TEXTURE_FILE_PATH = new string[] { "" };
-    string[] TEXTUREs_FILE_PATHs = new string[] { "" };
+    static string[] MAIN_TEXTURES_FILE_PATHS = new string[]                 { "Textures/SignTextures/Hanging/Main",   "Textures/SignTextures/Poster/Main",    "Textures/SignTextures/BillBoard/Main",   "Textures/SignTextures/Welcome/Main"};
+    static string[] GRAFITI_TEXTURES_FILE_PATHS = new string[]              { "Textures/SignTextures/Hanging/Grafiti","Textures/SignTextures/Poster/Grafiti", "Textures/SignTextures/BillBoard/Grafiti","Textures/SignTextures/Welcome/Grafiti"};
+    static string[] GREYSCALE_GRAFITI_TEXTURES_FILE_PATHS = new string[]    { "Textures/SignTextures/Hanging/Mask",   "Textures/SignTextures/Poster/MAsk",    "Textures/SignTextures/BillBoard/Mask",   "Textures/SignTextures/Welcome/Mask"};
 
-    public Texture m_MainTexture;
-
-    Texture[] m_GrafitiTextures;
-    Texture[] m_GrafitiTexturesGrayScale;
+    static Texture[][] m_MainTextures = new Texture[(int)SignType.Count][];
+    static Texture[][] m_GrafitiTextures = new Texture[(int)SignType.Count][];
+    static Texture[][] m_GrafitiTexturesGrayScale = new Texture[(int)SignType.Count][];
 
 	public Material i_SourceMaterial;
     Material m_Material;
@@ -27,11 +28,26 @@ public class Sign : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-	    //TODO:load textures
-		m_Material = new Material(i_SourceMaterial);
-        m_Material.SetTexture("_MainTexture", m_MainTexture);
+        m_Material = new Material(i_SourceMaterial);
 
+	    if(m_MainTextures[(int)m_SignType] == null)
+        {
+            m_MainTextures[(int)m_SignType] = Resources.LoadAll<Texture>(MAIN_TEXTURES_FILE_PATHS[(int)m_SignType]);
+        }
+        m_Material.SetTexture("_MainTexture", m_MainTextures[(int)m_SignType][Random.Range(0, m_MainTextures[(int)m_SignType].Length)]);
 
-        gameObject.renderer.material = m_Material;
+        if (m_GrafitiTextures[(int)m_SignType] == null)
+        {
+            m_GrafitiTextures[(int)m_SignType] = Resources.LoadAll<Texture>(GRAFITI_TEXTURES_FILE_PATHS[(int)m_SignType]);
+        }
+        m_Material.SetTexture("_GrafitiTexture", m_GrafitiTextures[(int)m_SignType][Random.Range(0, m_GrafitiTextures[(int)m_SignType].Length)]);
+
+        if (m_GrafitiTexturesGrayScale[(int)m_SignType] == null)
+        {
+            m_GrafitiTexturesGrayScale[(int)m_SignType] = Resources.LoadAll<Texture>(GREYSCALE_GRAFITI_TEXTURES_FILE_PATHS[(int)m_SignType]);
+        }
+        m_Material.SetTexture("_GrafitiGreyScale", m_GrafitiTexturesGrayScale[(int)m_SignType][Random.Range(0, m_GrafitiTexturesGrayScale[(int)m_SignType].Length)]);
+
+       gameObject.renderer.material = m_Material;
 	}
 }
