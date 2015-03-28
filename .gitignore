@@ -5,3 +5,5 @@ Trunk/BadTeeth/Temp/
 *.userprefs
 *.~vsdx
 Trunk/BadTeeth/obj/
+*.unityproj
+*.suo
