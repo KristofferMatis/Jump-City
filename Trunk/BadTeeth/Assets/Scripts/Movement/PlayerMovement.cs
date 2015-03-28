@@ -4,9 +4,6 @@ using System.Collections;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour 
 {
-#if DEBUG || UNITY_EDITOR
-    public bool i_DrawRays = true;
-#endif
 	CharacterController m_Controller;
 	
 	Vector3 m_Velocity = Vector3.zero;
@@ -14,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     bool m_IsGroundedThisFrame;
     bool m_CheckedGroundedThisFrame = false;
     const float GROUNDED_RAYCAST_DISTANCE = 0.217f;
+    LayerMask m_GroundedRaycastIgnoreMask;
 
     public enum States
     {
@@ -29,17 +27,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region Movement Variables
-    const float GROUNDED_MOVE_SPEED = 4.0f;
-    const float AIRBORNE_MOVE_SPEED = 2.5f;
+    public float GROUNDED_MOVE_SPEED = 4.0f;
+    public float AIRBORNE_MOVE_SPEED = 2.5f;
 
-    const float INITIAL_JUMP_SPEED = 0.155f;
-    const float GRAVITY = 0.6f;
+    public float INITIAL_JUMP_SPEED = 0.155f;
+    public float GRAVITY = 0.6f;
 
-    const float INITIAL_FLOAT_POWER = 0.2f;
-    const float FLOAT_POWER_LOSS = 0.14f;
+    public float INITIAL_FLOAT_POWER = 0.2f;
+    public float FLOAT_POWER_LOSS = 0.14f;
     float m_FloatPower = 0.0f;
 
-    const float JUMP_FORGIVNESS = 0.15f;
+    public float JUMP_FORGIVNESS = 0.15f;
     float m_JumpForgivnessTimer = 0.0f;
 
 	bool m_CanAirJump = false;
@@ -51,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
 	void Start () 
 	{
 		m_Controller = gameObject.GetComponent<CharacterController> ();
+        m_GroundedRaycastIgnoreMask = LayerMask.GetMask("Player");
 	}
 	
 	// Update is called once per frame
@@ -201,20 +200,17 @@ public class PlayerMovement : MonoBehaviour
 #if DEBUG || UNITY_EDITOR
             RaycastHit hitInfo;
 #endif
-            if(m_Controller.isGrounded || Physics.Raycast(transform.position, Vector3.down,out hitInfo, GROUNDED_RAYCAST_DISTANCE))
+            if (m_Controller.isGrounded || Physics.Raycast(transform.position, Vector3.down, out hitInfo, GROUNDED_RAYCAST_DISTANCE, ~m_GroundedRaycastIgnoreMask.value))
             {
 				m_IsGroundedThisFrame = true;
-#if DEBUG || UNITY_EDITOR
-                if(i_DrawRays)
-                {
-                    Debug.DrawLine(transform.position, hitInfo.point, Color.cyan);
-                }
-#endif
             }
 			else
 			{
 				m_IsGroundedThisFrame = false;
 			}
+            //Debug.Log(m_IsGroundedThisFrame);
+
+            //Debug.Log((hitInfo.collider != null) ? hitInfo.collider.name : "controller");
         }
         return m_IsGroundedThisFrame;
     }

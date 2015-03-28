@@ -16,21 +16,22 @@ public class Sign : MonoBehaviour
     string[] MAIN_TEXTURE_FILE_PATH = new string[] { "" };
     string[] TEXTUREs_FILE_PATHs = new string[] { "" };
 
-    Texture m_MainTexture;
+    public Texture m_MainTexture;
 
     Texture[] m_GrafitiTextures;
     Texture[] m_GrafitiTexturesGrayScale;
 
-    const string SPURCE_MATERIAL_FILE_PATH = "";
+	public Material i_SourceMaterial;
     Material m_Material;
 
 	// Use this for initialization
 	void Start () 
     {
 	    //TODO:load textures
-        m_Material = new Material(Resources.Load<Material>(SPURCE_MATERIAL_FILE_PATH));
-        //TODO:set Textures
+		m_Material = new Material(i_SourceMaterial);
+        m_Material.SetTexture("_MainTexture", m_MainTexture);
 
-        gameObject.renderer.materials[0] = m_Material;
+
+        gameObject.renderer.material = m_Material;
 	}
 }
