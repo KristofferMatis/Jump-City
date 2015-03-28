@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 	{
         int i = 0;
         m_FinalExternalMovement = Vector3.zero;
-        do
+        while (i < m_ExternalMovement.Count)
         {
             m_ExternalMovement[i].update();
             if (m_ExternalMovement[i].isExpired())
@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
             }
             m_FinalExternalMovement += m_ExternalMovement[i].m_Velocity;
 
-        } while (i < m_ExternalMovement.Count);
+        }
 
 
             if (m_FullStop)
