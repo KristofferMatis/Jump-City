@@ -25,6 +25,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 	public float m_GetUpTime;
 
 	public bool m_CanClimb;
+	public bool m_AutoGetUpAfterHitPlayer = false;
 
 	float m_DiveChargeTimer;
 	PlayerMovement m_Player;
@@ -63,6 +64,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	float m_DiveTimer;
 	float m_GetUpTimer;
+
+	bool m_HasHitPlayer;
 
 	// Use this for initialization
 	void Start () 
@@ -137,12 +140,12 @@ public class Police : MonoBehaviour, IHitBoxListener
 	
 	void EnterFall()
 	{
-
+		m_KnockbackTimer = m_PoliceKnockbackTime;
 	}
 	
 	void EnterKnockback()
 	{
-		
+
 	}
 	
 	void EnterPatrol()
@@ -155,6 +158,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 		m_DiveChargeTimer = m_DiveChargeDelay;
 
 		m_CurrentSpeed.x = 0.0f;
+
+		m_HasHitPlayer = false;
 	}
 	
 	void EnterIdle()
@@ -183,7 +188,12 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	void DoKnockback()
 	{
+		m_CurrentSpeed.y -= m_Gravity * Time.deltaTime;
 
+		if(m_KnockbackTimer > 0.0f)
+		{
+			m_KnockbackTimer -= Time.deltaTime;
+		}
 	}
 
 	void DoPatrol()
@@ -320,6 +330,11 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 					EnterPatrol ();
 				}
+				else
+				{
+					m_CurrentSpeed.x = 0.0f;
+					m_CurrentSpeed.y = 0.0f;
+				}
 			}
 			break;
 			
@@ -342,6 +357,12 @@ public class Police : MonoBehaviour, IHitBoxListener
 			break;
 			
 		case PoliceState.e_Tackling:
+			if((m_CollisionFlags & CollisionFlags.Below) == 0)
+			{
+				m_CurrentState = PoliceState.e_Falling;
+				
+				EnterFall ();
+			}
 			break;
 
 		case PoliceState.e_Idle:
@@ -412,11 +433,35 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	public void OnHitBoxEnter (Collider otherCollider)
 	{
+		Debug.Log ("Trigger");
+
 		PlayerMovement player = otherCollider.GetComponent<PlayerMovement> ();
 
-		if(player)
+		if(!m_HasHitPlayer && player)
 		{
-			player.knockback(m_CurrentForward * m_DiveKnockbackForce + transform.up * 0.5f);
+			Debug.Log ("Hitting player");
+
+			player.knockback(m_CurrentForward * m_DiveKnockbackForce + transform.up * 5.0f);
+
+			m_HasHitPlayer = true;
+
+			if(m_AutoGetUpAfterHitPlayer)
+			{
+				m_HitBox.enabled = false;
+
+				m_CurrentState = PoliceState.e_Patrolling;
+
+				EnterPatrol();
+			}
 		}
+	}
+
+	public void Knockback(Vector3 knockbackSpeed)
+	{
+		m_CurrentState = PoliceState.e_Knockback;
+
+		EnterKnockback ();
+
+		m_CurrentSpeed = knockbackSpeed;
 	}
 }

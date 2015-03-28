@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     Stamina m_Stamina;
 
-    List<ExternalMovment> m_ExternalMovement = new List<ExternalMovment>();
+    List<ExternalMovement> m_ExternalMovement = new List<ExternalMovement>();
     Vector3 m_FinalExternalMovement = Vector3.zero;
 
     // Use this for initialization
@@ -275,11 +275,11 @@ public class PlayerMovement : MonoBehaviour
 
 	public void knockback(Vector3 velocity, float time = 1.5f)
 	{
-        m_ExternalMovement.Add(new ExternalMovment(velocity, time));
+        m_ExternalMovement.Add(new ExternalMovement(velocity, time));
 	}
 }
 
-class ExternalMovment
+class ExternalMovement
 {
     public Vector3 m_Velocity;
     Vector3 m_OriginalVelocity;
@@ -287,7 +287,7 @@ class ExternalMovment
     float m_TimeLeft;
     float m_OriginalTimeLeft;
 
-    public ExternalMovment(Vector3 velocity, float time)
+    public ExternalMovement(Vector3 velocity, float time)
     {
         m_Velocity = velocity;
         m_OriginalVelocity = velocity;
@@ -298,7 +298,7 @@ class ExternalMovment
 
     public bool isExpired()
     {
-        return m_TimeLeft > 0.0f;
+        return m_TimeLeft < 0.0f;
     }
 
     public void update()

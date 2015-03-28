@@ -12,6 +12,8 @@ public class HitBox: MonoBehaviour
 
 	void OnTriggerEnter(Collider otherCollider)
 	{
+		Debug.Log ("Trigger bitches !!!!!");
+
 		m_Listener.OnHitBoxEnter (otherCollider);
 	}
 }
