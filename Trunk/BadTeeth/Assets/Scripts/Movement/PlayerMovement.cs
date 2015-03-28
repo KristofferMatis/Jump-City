@@ -241,4 +241,9 @@ public class PlayerMovement : MonoBehaviour
         }
         return m_IsGroundedThisFrame;
     }
+
+	public void knockback(Vector3 knockbackSpeed)
+	{
+		m_Velocity = knockbackSpeed;
+	}
 }

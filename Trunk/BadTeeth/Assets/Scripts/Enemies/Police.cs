@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Police : MonoBehaviour 
+public class Police : MonoBehaviour, IHitBoxListener
 {
+	public HitBox m_HitBox;
+
 	public float m_DiveSpeed;
 	public float m_PatrolSpeed;
 	public float m_ClimbSpeed;
@@ -12,9 +14,15 @@ public class Police : MonoBehaviour
 	public float m_DiveChargeDelay;
 	public float m_PoliceKnockbackTime;
 	public float m_IdleLockTime;
+	public float m_MantleTime;
+
+	public Vector3 m_MantleOffset;
 
 	public float m_PlayerAttackRange;
 	public float m_PlayerEscapeRange;
+
+	public float m_DiveTime;
+	public float m_GetUpTime;
 
 	public bool m_CanClimb;
 
@@ -32,7 +40,8 @@ public class Police : MonoBehaviour
 		e_Climbing,
 		e_Tackling,
 		e_Falling,
-		e_Knockback
+		e_Knockback,
+		e_Mantle
 	}
 
 	PoliceState m_CurrentState;
@@ -48,6 +57,12 @@ public class Police : MonoBehaviour
 	float m_Gravity = 9.8f;
 
 	float m_IdleLockTimer;
+	float m_PatrolLockTimer;
+
+	float m_MantleTimer;
+
+	float m_DiveTimer;
+	float m_GetUpTimer;
 
 	// Use this for initialization
 	void Start () 
@@ -59,6 +74,13 @@ public class Police : MonoBehaviour
 		m_Controller = GetComponent<CharacterController> ();
 
 		m_CurrentForward = Vector3.back;
+
+		if(m_HitBox)
+		{
+			m_HitBox.RegisterListener(this);
+
+			m_HitBox.enabled = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -92,6 +114,10 @@ public class Police : MonoBehaviour
 		case PoliceState.e_Idle:
 			DoIdle();
 			break;
+
+		case PoliceState.e_Mantle:
+			DoMantle();
+			break;
 		}
 		
 		m_CollisionFlags = m_Controller.Move (m_CurrentSpeed * Time.deltaTime);
@@ -121,17 +147,24 @@ public class Police : MonoBehaviour
 	
 	void EnterPatrol()
 	{
-
+		m_CurrentSpeed.x = m_CurrentForward.x * m_PatrolSpeed;
 	}
 	
 	void EnterTackle()
 	{
-		
+		m_DiveChargeTimer = m_DiveChargeDelay;
+
+		m_CurrentSpeed.x = 0.0f;
 	}
 	
 	void EnterIdle()
 	{
 		m_IdleLockTimer = m_IdleLockTime;
+	}
+
+	void EnterMantle()
+	{
+		m_MantleTimer = m_MantleTime;
 	}
 
 	void DoClimb()
@@ -164,8 +197,8 @@ public class Police : MonoBehaviour
 
 		if(!m_CanClimb && m_GroundCollider)
 		{
-			if((playerDirection < 0.0f && transform.position.x <= m_GroundCollider.bounds.min.x)
-			   && (playerDirection > 0.0f && transform.position.x >= m_GroundCollider.bounds.max.x))
+			if((playerDirection < 0.0f && transform.position.x <= m_GroundCollider.bounds.min.x + 1.0f)
+			   && (playerDirection > 0.0f && transform.position.x >= m_GroundCollider.bounds.max.x - 1.0f))
 			{
 				m_CurrentSpeed.x = 0.0f;
 			}
@@ -174,14 +207,74 @@ public class Police : MonoBehaviour
 
 	void DoTackle()
 	{
+		if(m_DiveChargeTimer > 0.0f)
+		{
+			m_DiveChargeTimer -= Time.deltaTime;
 
+			if(m_DiveChargeTimer <= 0.0f)
+			{
+				m_CurrentSpeed.x = m_CurrentForward.x * m_DiveSpeed;
+				
+				m_DiveTimer = m_DiveTime;
+
+				m_HitBox.enabled = true;
+			}
+		}
+		else if(m_DiveTimer > 0.0f)
+		{
+			m_DiveTimer -= Time.deltaTime;
+
+			if(m_DiveTimer <= 0.0f)
+			{
+				m_HitBox.enabled = false;
+
+				m_GetUpTimer = m_GetUpTime;
+
+				m_CurrentSpeed.x = 0.0f;
+			}
+		}
+		else if(m_GetUpTimer > 0.0f)
+		{
+			m_GetUpTimer -= Time.deltaTime;
+			
+			if(m_GetUpTimer <= 0.0f)
+			{
+				m_CurrentState = PoliceState.e_Patrolling;
+
+				EnterPatrol();
+			}
+		}
 	}
 
 	void DoIdle()
 	{
 		m_CurrentSpeed.x = 0.0f;
 
-		m_IdleLockTimer -= Time.deltaTime;
+		if(m_IdleLockTimer > 0.0f)
+		{
+			m_IdleLockTimer -= Time.deltaTime;
+
+			if(m_IdleLockTimer <= 0.0f)
+			{
+				m_PatrolLockTimer = m_IdleLockTime;
+			}
+		}
+
+		m_PatrolLockTimer -= Time.deltaTime;
+	}
+
+	void DoMantle()
+	{
+		m_MantleTimer -= Time.deltaTime;
+
+		m_CurrentSpeed.y = 0.0f;
+
+		if(m_MantleTimer <= 0.0f)
+		{
+			m_CurrentState = PoliceState.e_Patrolling;
+
+			transform.position += transform.up * m_MantleOffset.y + m_CurrentForward * m_MantleOffset.x;
+		}
 	}
 
 	void UpdateStateForCollision()
@@ -189,14 +282,19 @@ public class Police : MonoBehaviour
 		switch(m_CurrentState)
 		{
 		case PoliceState.e_Climbing:
-			if((m_CollisionFlags & CollisionFlags.Sides) == 0)
-			{
-				m_CurrentState = PoliceState.e_Patrolling;
 
-				EnterPatrol ();
+			Vector3 origin = transform.position;
+			origin.y = m_Controller.bounds.min.y;
+			origin.y += m_MantleOffset.y;
+
+			if(!Physics.Raycast(origin, m_CurrentForward, m_Controller.radius + 0.1f))
+			{
+				m_CurrentState = PoliceState.e_Mantle;
+
+				EnterMantle ();
 			}
 			break;
-			
+
 		case PoliceState.e_Falling:
 			if((m_CollisionFlags & CollisionFlags.Below) != 0)
 			{
@@ -228,7 +326,7 @@ public class Police : MonoBehaviour
 		case PoliceState.e_Patrolling:
 			if((m_CollisionFlags & CollisionFlags.Sides) != 0)
 			{
-				if(m_CanClimb && Physics.Raycast(transform.position, m_CurrentForward))
+				if(m_CanClimb && Physics.Raycast(transform.position - 0.3f * transform.up, m_CurrentForward))
 				{
 					m_CurrentState = PoliceState.e_Climbing;
 
@@ -244,7 +342,6 @@ public class Police : MonoBehaviour
 			break;
 			
 		case PoliceState.e_Tackling:
-			DoTackle ();
 			break;
 
 		case PoliceState.e_Idle:
@@ -281,6 +378,17 @@ public class Police : MonoBehaviour
 
 				EnterIdle ();
 			}
+			else if(playerDistance <= m_PlayerAttackRange)
+			{
+				float playerDistanceInY = Mathf.Abs (m_Player.transform.position.y - transform.position.y);
+
+				if(playerDistanceInY <= 2.0f)
+				{
+					m_CurrentState = PoliceState.e_Tackling;
+
+					EnterTackle ();
+				}
+			}
 		}
 			break;
 			
@@ -291,14 +399,24 @@ public class Police : MonoBehaviour
 		{
 			float playerDistance = Mathf.Abs (m_Player.transform.position.x - transform.position.x);
 			
-			if(playerDistance < m_PlayerEscapeRange && m_IdleLockTimer <= 0.0f)
+			if(playerDistance < m_PlayerEscapeRange && (m_IdleLockTimer > 0.0f || m_PatrolLockTimer <= 0.0f))
 			{
-				m_CurrentState = PoliceState.e_Idle;
+				m_CurrentState = PoliceState.e_Patrolling;
 				
-				EnterIdle ();
+				EnterPatrol ();
 			}
 		}
 			break;
+		}
+	}
+
+	public void OnHitBoxEnter (Collider otherCollider)
+	{
+		PlayerMovement player = otherCollider.GetComponent<PlayerMovement> ();
+
+		if(player)
+		{
+			player.knockback(m_CurrentForward * m_DiveKnockbackForce + transform.up * 0.5f);
 		}
 	}
 }
