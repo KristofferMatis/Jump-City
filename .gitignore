@@ -1,2 +1,5 @@
 Trunk/BadTeeth/Library/
 Trunk/BadTeeth/Temp/
+*.csproj
+*.sln
+*.userprefs
