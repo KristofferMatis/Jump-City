@@ -59,11 +59,14 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    Stamina m_Stamina;
+
     // Use this for initialization
 	void Start () 
 	{
 		m_Controller = gameObject.GetComponent<CharacterController> ();
 		m_GroundedRaycastIgnoreMask = LayerMask.GetMask("Player", "Ignore Raycast");
+        m_Stamina = gameObject.GetComponent<Stamina>();
 	}
 	
 	// Update is called once per frame
@@ -132,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if(InputManager.getJumpDown())
+        if( m_Stamina.stamina > Constants.JUMP_COST && InputManager.getJumpDown())
         {
             m_JumpForgivnessTimer = JUMP_FORGIVNESS;
             State = States.Airborne;
@@ -169,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			m_JumpForgivnessTimer -= Time.deltaTime;
 
-            if(InputManager.getJumpDown())
+            if (m_Stamina.stamina > Constants.JUMP_COST && InputManager.getJumpDown())
             {
                 jump();
                 m_JumpForgivnessTimer = 0.0f;
@@ -177,10 +180,10 @@ public class PlayerMovement : MonoBehaviour
 		}
         else if(m_CanAirJump)
         {
-            if (InputManager.getJumpDown())
+            if (m_Stamina.stamina > Constants.DOUBLE_JUMP_COST && InputManager.getJumpDown())
             {
 				m_CanAirJump = false;
-                jump();
+                doubleJump();
             }
         }
 
@@ -216,6 +219,15 @@ public class PlayerMovement : MonoBehaviour
         m_Velocity.y = INITIAL_JUMP_SPEED;
         m_FloatPower = INITIAL_FLOAT_POWER;
         m_IsHodlingJump = true;
+        m_Stamina.stamina -= Constants.JUMP_COST;
+    }
+
+    void doubleJump()
+    {
+        m_Velocity.y = INITIAL_JUMP_SPEED;
+        m_FloatPower = INITIAL_FLOAT_POWER;
+        m_IsHodlingJump = true;
+        m_Stamina.stamina -= Constants.DOUBLE_JUMP_COST;
     }
 
     public bool getIsGrounded()

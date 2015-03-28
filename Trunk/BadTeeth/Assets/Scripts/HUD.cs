@@ -6,12 +6,7 @@ public class HUD : MonoBehaviour
     const string STAMINA_TEXTURES_PATH = "Textures/Stamina";
     Texture[] m_StaminaTextures;
 
-	int m_Stamina = Constants.MAX_STAMINA;
-	public int stamina
-	{
-		get{ return m_Stamina; }
-		set{ m_Stamina = value; }
-	}
+	Stamina m_Stamina;
 
     Vector2 i_StaminaBarPosition = new Vector2(0.004f, 0.01f);
 	Vector2 i_StaminaBarScale = new Vector2(0.30f, 0.03f);
@@ -20,6 +15,7 @@ public class HUD : MonoBehaviour
 	void Start () 
     {
         m_StaminaTextures = Resources.LoadAll<Texture>(STAMINA_TEXTURES_PATH);
+		m_Stamina = getPlayer.Instance.gameObject.GetComponent<Stamina> ();
 	}
 
     void OnGUI()
@@ -42,11 +38,11 @@ public class HUD : MonoBehaviour
             {
                 GUI.DrawTexture(StaminaBar, m_StaminaTextures[4]);
             }
-			else if (i + (increment * 2) >= Constants.MAX_STAMINA && Stamina + increment >= Constants.MAX_STAMINA)
+			else if (i + (increment * 2) >= Constants.MAX_STAMINA && m_Stamina.stamina + increment >= Constants.MAX_STAMINA)
 			{
 				GUI.DrawTexture(StaminaBar, m_StaminaTextures[3]);
 			}
-            else if(i < Stamina)
+			else if(i < m_Stamina.stamina)
             {
                 GUI.DrawTexture(StaminaBar, m_StaminaTextures[2]);
             }
