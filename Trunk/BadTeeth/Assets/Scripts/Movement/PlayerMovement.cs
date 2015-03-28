@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour 
@@ -61,6 +62,9 @@ public class PlayerMovement : MonoBehaviour
 
     Stamina m_Stamina;
 
+    List<ExternalMovment> m_ExternalMovement = new List<ExternalMovment>();
+    Vector3 m_FinalExternalMovement = Vector3.zero;
+
     // Use this for initialization
 	void Start () 
 	{
@@ -72,8 +76,23 @@ public class PlayerMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-        if (m_FullStop)
-			return;
+        int i = 0;
+        m_FinalExternalMovement = Vector3.zero;
+        do
+        {
+            m_ExternalMovement[i].update();
+            if (m_ExternalMovement[i].isExpired())
+            {
+                m_ExternalMovement.RemoveAt(i);
+                continue;
+            }
+            m_FinalExternalMovement += m_ExternalMovement[i].m_Velocity;
+
+        } while (i < m_ExternalMovement.Count);
+
+
+            if (m_FullStop)
+                return;
 
         switch (m_State)
         {
@@ -85,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
         };
 
-		m_Controller.Move (m_Velocity);
+        m_Controller.Move(m_Velocity + m_FinalExternalMovement);
         transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
 	}
 
@@ -254,8 +273,37 @@ public class PlayerMovement : MonoBehaviour
         return m_IsGroundedThisFrame;
     }
 
-	public void knockback(Vector3 knockbackSpeed)
+	public void knockback(Vector3 velocity, float time = 1.5f)
 	{
-		m_Velocity = knockbackSpeed;
+        m_ExternalMovement.Add(new ExternalMovment(velocity, time));
 	}
+}
+
+class ExternalMovment
+{
+    public Vector3 m_Velocity;
+    Vector3 m_OriginalVelocity;
+
+    float m_TimeLeft;
+    float m_OriginalTimeLeft;
+
+    public ExternalMovment(Vector3 velocity, float time)
+    {
+        m_Velocity = velocity;
+        m_OriginalVelocity = velocity;
+
+        m_TimeLeft = time;
+        m_OriginalTimeLeft = time;
+    }
+
+    public bool isExpired()
+    {
+        return m_TimeLeft > 0.0f;
+    }
+
+    public void update()
+    {
+        m_TimeLeft -= Time.deltaTime;
+        m_Velocity = m_OriginalVelocity * (m_TimeLeft / m_OriginalTimeLeft);
+    }
 }
