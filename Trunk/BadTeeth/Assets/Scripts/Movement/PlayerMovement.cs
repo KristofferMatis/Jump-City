@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
         };
 
-        m_Controller.Move(m_Velocity + m_FinalExternalMovement);
+        m_Controller.Move(m_Velocity + (m_FinalExternalMovement * Time.deltaTime));
         transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
 	}
 
