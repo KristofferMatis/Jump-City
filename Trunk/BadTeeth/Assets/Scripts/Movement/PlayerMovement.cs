@@ -329,6 +329,7 @@ public class PlayerMovement : MonoBehaviour
 	{
         m_KnockBackMovement.Add(new knockBackMovement(velocity, time));
 		m_Stamina.stamina -= staminaHit;
+        m_Animator.playAnimation(PlayerAnimator.Animations.Knockback);
 
 		if(m_Stamina.stamina == 0)
 		{

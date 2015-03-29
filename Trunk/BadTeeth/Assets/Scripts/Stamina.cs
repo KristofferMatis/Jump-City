@@ -31,7 +31,7 @@ public class Stamina : MonoBehaviour , CallBack
 	void Update () 
 	{
         
-        if (m_IsDoneDrinking)
+        if (m_IsDoneDrinking && gameObject.GetComponent<PlayerMovement>().IsAllowedToMove == false)
         {
             m_CurrentEnergyDrinks--;
             m_Stamina += ENERYGY_DRINK_RESTORATION_VALUE;

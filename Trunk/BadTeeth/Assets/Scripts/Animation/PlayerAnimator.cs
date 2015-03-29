@@ -18,7 +18,8 @@ public class PlayerAnimator : MonoBehaviour
 									"Drink",
 									"Punch",
                                     "New State",
-									"BNew State"};
+									"New State",
+                                    "Punch2"};
 
 	public enum Animations
 	{
@@ -33,7 +34,8 @@ public class PlayerAnimator : MonoBehaviour
 		Drink,
 		Punch,
         BlankMisc,
-        BlankKnockBack
+        BlankKnockBack,
+        Punch2
 	};
 
 	// Use this for initialization
@@ -42,21 +44,29 @@ public class PlayerAnimator : MonoBehaviour
 		m_Animator = gameObject.GetComponentInChildren<Animator> ();
 	}
 
-	public void playAnimation(Animations animation)
+	public bool playAnimation(Animations animation)
 	{
-        Debug.Log(m_States[(int)animation]);
-        if (animation != Animations.Punch && animation != Animations.Drink && animation != Animations.Spray_Billboard && animation != Animations.Shake_Can && animation != Animations.BlankMisc)
+        //Debug.Log(m_States[(int)animation]);
+        if (animation != Animations.Punch && animation != Animations.Punch2 && animation != Animations.Drink && animation != Animations.Spray_Billboard && animation != Animations.Shake_Can && animation != Animations.BlankMisc)
 		{
 			m_Animator.Play (m_States [(int)animation]);//, CROSS_FADE_TIME);
 		}
-        else if (animation != Animations.BlankKnockBack && animation != Animations.BlankKnockBack)
+        else if (animation != Animations.BlankKnockBack && animation != Animations.BlankKnockBack && animation != Animations.Punch && animation != Animations.Punch2)
 		{
 			m_Animator.Play(m_States[(int)animation], 1);
 		}
-        else if (animation != Animations.BlankKnockBack)
+        else if (animation != Animations.BlankKnockBack && animation != Animations.BlankKnockBack)
         {
-            m_Animator.Play(m_States[(int)animation], 3);
+            if(m_Animator.GetCurrentAnimatorStateInfo(2).IsTag("Blank"))
+                m_Animator.Play(m_States[(int)animation], 2);
+            else
+                return false;
         }
+        else
+        {
+            m_Animator.Play(m_States[(int)animation], 4);
+        }
+        return true;
 	}
 
     const string SPEED_VARIALBE_NAME = "Speed";

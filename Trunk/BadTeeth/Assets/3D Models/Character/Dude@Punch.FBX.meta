@@ -66,7 +66,8 @@ ModelImporter:
     4300000: Can
     4300002: Head
     4300004: Body
-    7400000: Take 001
+    7400000: Punch
+    7400002: Punch2
     9500000: //RootNode
     13700000: Body
     13700002: Head
@@ -85,7 +86,175 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Punch
+      takeName: Take 001
+      firstFrame: 1135
+      lastFrame: 1160
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: CAT_Pelvis
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand/Can
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle/CATRigLLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle/CATRigRLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3/CAT_Bandana_4
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3/CAT_Bandana_4/CAT_Bandana_5
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm/CAT_Right_Hand
+        weight: 1
+      - path: Guy
+        weight: 1
+      - path: Guy/Head
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Punch2
+      takeName: Take 001
+      firstFrame: 1160
+      lastFrame: 1172
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: CAT_Pelvis
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand/Can
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle/CATRigLLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle/CATRigRLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3/CAT_Bandana_4
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3/CAT_Bandana_4/CAT_Bandana_5
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm/CAT_Right_Hand
+        weight: 1
+      - path: Guy
+        weight: 1
+      - path: Guy/Head
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
     isReadable: 1
   meshes:
     lODScreenPercentages: []
