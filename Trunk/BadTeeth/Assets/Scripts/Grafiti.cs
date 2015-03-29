@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Grafiti : MonoBehaviour 
+public class Grafiti : MonoBehaviour , CallBack
 {
 	Sign m_Target;
     PlayerMovement m_PlayerMovement;
@@ -11,9 +11,14 @@ public class Grafiti : MonoBehaviour
 
 	float savedProgress = 0.0f;
 
+    PlayerAnimator m_Animator;
+    bool m_DoneShaking = false;
+
     void Start()
     {
         m_PlayerMovement = gameObject.GetComponent<PlayerMovement>();
+        m_Animator = gameObject.GetComponent<PlayerAnimator>();
+        gameObject.GetComponentInChildren<AnimationCallBackManager>().registerCallBack(this);
     }
 
 	// Update is called once per frame
@@ -28,6 +33,8 @@ public class Grafiti : MonoBehaviour
 			savedProgress = m_Target.NormalizedPaintedTime;
             m_Target = null;
             m_PlayerMovement.IsAllowedToMove = true;
+            m_PlayerMovement.FullStop = false;
+            m_Animator.playAnimation(PlayerAnimator.Animations.BlankMisc);
             return;
         }
 
@@ -36,12 +43,22 @@ public class Grafiti : MonoBehaviour
             m_PlayerMovement.IsAllowedToMove = false;
             if((m_PlayerMovement.transform.position - m_Target.i_PlayerMount.position).magnitude < MIN_PLAYER_DIST)
             {
-			    m_Target.PaintedTime += Time.deltaTime;
-                transform.forward = new Vector3(0.0f, 0.0f, 1.0f);
+                if (m_DoneShaking)
+                {
+                    m_Target.PaintedTime += Time.deltaTime;
+                    transform.forward = new Vector3(0.0f, 0.0f, 1.0f);
+                    m_Animator.playAnimation(PlayerAnimator.Animations.Spray_Billboard);
+                    m_PlayerMovement.FullStop = true;
+                }
+                else
+                {
+                    m_Animator.playAnimation(PlayerAnimator.Animations.Shake_Can);
+                }
             }
             else
             {
 				m_PlayerMovement.externalMovement(PLAYER_CORRECTION_SPEED * (m_Target.i_PlayerMount.position - m_PlayerMovement.transform.position).normalized);
+                m_DoneShaking = false;
             }
         }
 		else if(InputManager.getSprayPaintUp())
@@ -49,8 +66,19 @@ public class Grafiti : MonoBehaviour
             m_PlayerMovement.IsAllowedToMove = true;
 			GameManager.Instance.AddThreat(Constants.TAG_THREAT * (m_Target.NormalizedPaintedTime - savedProgress));
 			savedProgress = m_Target.NormalizedPaintedTime;
+            m_DoneShaking = false;
+            m_PlayerMovement.FullStop = false;
+            m_Animator.playAnimation(PlayerAnimator.Animations.BlankMisc);
         }
 	}
+
+    public void CallBack(CallBackEvents callBack)
+    {
+        if(callBack == CallBackEvents.Shake_Done)
+        {
+            m_DoneShaking = true;
+        }
+    }
 
 	void OnTriggerEnter(Collider other)
 	{
