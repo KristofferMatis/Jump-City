@@ -9,7 +9,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 	public float m_PatrolSpeed;
 	public float m_ClimbSpeed;
 	public float m_RotationSpeed;
-	public float m_DiveKnockbackForce;
+	public float m_DiveKnockbackHorizontalForce;
+	public float m_DiveKnockbackVerticalForce;
 	public float m_DiveStaminaHit;
 	public float m_DiveChargeDelay;
 	public float m_PoliceKnockbackTime;
@@ -27,6 +28,10 @@ public class Police : MonoBehaviour, IHitBoxListener
 	public bool m_CanClimb;
 	public bool m_AutoGetUpAfterHitPlayer = false;
 
+	public float m_KnockedOutTime;
+
+	float m_KnockedOutTimer;
+
 	float m_DiveChargeTimer;
 	PlayerMovement m_Player;
 
@@ -42,7 +47,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 		e_Tackling,
 		e_Falling,
 		e_Knockback,
-		e_Mantle
+		e_Mantle,
+		e_KnockedOut
 	}
 
 	PoliceState m_CurrentState;
@@ -82,15 +88,15 @@ public class Police : MonoBehaviour, IHitBoxListener
 		{
 			m_HitBox.RegisterListener(this);
 
-			m_HitBox.enabled = false;
+			m_HitBox.gameObject.SetActive(false);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log (m_CurrentState);
-		Debug.Log (m_CurrentSpeed);
+		//Debug.Log (m_CurrentState);
+		//Debug.Log (m_CurrentSpeed);
 
 		switch(m_CurrentState)
 		{
@@ -120,6 +126,10 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 		case PoliceState.e_Mantle:
 			DoMantle();
+			break;
+
+		case PoliceState.e_KnockedOut:
+			DoKnockedOut();
 			break;
 		}
 		
@@ -152,6 +162,13 @@ public class Police : MonoBehaviour, IHitBoxListener
 	{
 		m_CurrentSpeed.x = m_CurrentForward.x * m_PatrolSpeed;
 	}
+
+	void EnterKnockedOut()
+	{
+		m_CurrentSpeed.x = 0.0f;
+
+		m_KnockedOutTimer = m_KnockedOutTime;
+	}
 	
 	void EnterTackle()
 	{
@@ -160,6 +177,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 		m_CurrentSpeed.x = 0.0f;
 
 		m_HasHitPlayer = false;
+
+		m_HitBox.gameObject.SetActive(false);
 	}
 	
 	void EnterIdle()
@@ -227,7 +246,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 				
 				m_DiveTimer = m_DiveTime;
 
-				m_HitBox.enabled = true;
+				m_HitBox.gameObject.SetActive(true);
 			}
 		}
 		else if(m_DiveTimer > 0.0f)
@@ -236,7 +255,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 			if(m_DiveTimer <= 0.0f)
 			{
-				m_HitBox.enabled = false;
+				m_HitBox.gameObject.SetActive(false);
 
 				m_GetUpTimer = m_GetUpTime;
 
@@ -287,6 +306,11 @@ public class Police : MonoBehaviour, IHitBoxListener
 		}
 	}
 
+	void DoKnockedOut()
+	{
+		m_KnockedOutTimer -= Time.deltaTime;
+	}
+
 	void UpdateStateForCollision()
 	{
 		switch(m_CurrentState)
@@ -326,9 +350,9 @@ public class Police : MonoBehaviour, IHitBoxListener
 			{
 				if(m_KnockbackTimer <= 0.0f)
 				{
-					m_CurrentState = PoliceState.e_Patrolling;
+					m_CurrentState = PoliceState.e_KnockedOut;
 
-					EnterPatrol ();
+					EnterKnockedOut ();
 				}
 				else
 				{
@@ -371,6 +395,12 @@ public class Police : MonoBehaviour, IHitBoxListener
 				m_CurrentState = PoliceState.e_Falling;
 
 				EnterFall ();
+			}
+			break;
+
+		case PoliceState.e_KnockedOut:
+			{
+
 			}
 			break;
 		}
@@ -428,26 +458,28 @@ public class Police : MonoBehaviour, IHitBoxListener
 			}
 		}
 			break;
+
+		case PoliceState.e_KnockedOut:
+			{
+
+			}
+			break;
 		}
 	}
 
 	public void OnHitBoxEnter (Collider otherCollider)
 	{
-		Debug.Log ("Trigger");
-
 		PlayerMovement player = otherCollider.GetComponent<PlayerMovement> ();
 
 		if(!m_HasHitPlayer && player)
 		{
-			Debug.Log ("Hitting player");
-
-			player.knockback(m_CurrentForward * m_DiveKnockbackForce + transform.up * 5.0f);
+			player.knockback(m_CurrentForward * m_DiveKnockbackHorizontalForce + transform.up * m_DiveKnockbackVerticalForce);
 
 			m_HasHitPlayer = true;
 
 			if(m_AutoGetUpAfterHitPlayer)
 			{
-				m_HitBox.enabled = false;
+				m_HitBox.gameObject.SetActive(false);
 
 				m_CurrentState = PoliceState.e_Patrolling;
 
