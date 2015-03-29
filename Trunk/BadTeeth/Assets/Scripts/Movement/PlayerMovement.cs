@@ -347,9 +347,8 @@ public class PlayerMovement : MonoBehaviour , CallBack
         if(!m_CheckedGroundedThisFrame)
         {
             m_CheckedGroundedThisFrame = true;
-#if DEBUG || UNITY_EDITOR
+
             RaycastHit hitInfo;
-#endif
             if (/*m_Controller.isGrounded || */Physics.Raycast(transform.position, Vector3.down, out hitInfo, GROUNDED_RAYCAST_DISTANCE, ~m_GroundedRaycastIgnoreMask.value))
             {
 				m_IsGroundedThisFrame = true;
