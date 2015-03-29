@@ -5,7 +5,7 @@ using GamepadInput;
 
 public static class InputManager
 {
-    public static bool IsUsingKeyboard = false;
+    public static bool IsUsingKeyboard = true;
 
     #region public inputs
     public static bool getRun()
