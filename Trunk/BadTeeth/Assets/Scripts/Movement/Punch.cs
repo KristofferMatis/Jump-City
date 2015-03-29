@@ -19,6 +19,8 @@ public class Punch : MonoBehaviour, IHitBoxListener
 
 	int m_Combo;
 
+	Stamina m_Stamina;
+
 	void Start()
 	{
 		m_HitBox = GetComponentInChildren<HitBox> ();
@@ -26,6 +28,8 @@ public class Punch : MonoBehaviour, IHitBoxListener
 		m_HitBox.gameObject.SetActive(false);
 		
 		m_HitParticles = GetComponentInChildren<ParticleSystem> ();
+
+		m_Stamina = GetComponent<Stamina> ();
 	}
 
 	// Update is called once per frame
@@ -42,11 +46,13 @@ public class Punch : MonoBehaviour, IHitBoxListener
 				m_ComboTimer = m_TimeToCombo;
 			}
 		}
-		else if(InputManager.getPunchDown())
+		else if(InputManager.getPunchDown() && m_Stamina.stamina >= Constants.PUNCH_COST)
 		{
 			m_PunchTimer = m_PunchTime;
 
 			m_HitBox.gameObject.SetActive(true);
+
+			m_Stamina.stamina -= Constants.PUNCH_COST;
 			
 			// TODO: Play proper animation for combo
 
