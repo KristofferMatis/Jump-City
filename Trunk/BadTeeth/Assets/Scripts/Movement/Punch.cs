@@ -15,7 +15,7 @@ public class Punch : MonoBehaviour, IHitBoxListener
 	float m_ComboTimer;
 
 	HitBox m_HitBox;
-	ParticleSystem m_HitParticles;
+	public ParticleSystem m_HitParticles;
 
 	int m_Combo;
 
@@ -32,8 +32,6 @@ public class Punch : MonoBehaviour, IHitBoxListener
 		m_HitBox = GetComponentInChildren<HitBox> ();
 		m_HitBox.RegisterListener(this);
 		m_HitBox.gameObject.SetActive(false);
-		
-		m_HitParticles = GetComponentInChildren<ParticleSystem> ();
 
         m_Animator = GetComponentInChildren<PlayerAnimator>();
 		m_Stamina = GetComponent<Stamina> ();
