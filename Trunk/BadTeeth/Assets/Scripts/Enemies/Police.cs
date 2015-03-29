@@ -81,9 +81,14 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	Animation m_Animation;
 
+    public AudioClip[] HurtClips;
+    AudioSource m_Source;
+
 	// Use this for initialization
 	void Start () 
 	{
+        m_Source = gameObject.AddComponent<AudioSource>();
+
 		m_Player = getPlayer.Instance.gameObject.GetComponent<PlayerMovement>();
 
 		m_CurrentState = PoliceState.e_StepOutside;
@@ -176,7 +181,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 	void EnterKnockback()
 	{
 		m_KnockbackTimer = m_PoliceKnockbackTime;
-
+        m_Source.PlayOneShot(HurtClips[Random.Range(0, HurtClips.Length)]);
 		m_Animation.Play ("Knockback");
 	}
 	
