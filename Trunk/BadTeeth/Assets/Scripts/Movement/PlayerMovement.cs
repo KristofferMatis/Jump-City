@@ -325,6 +325,8 @@ public class PlayerMovement : MonoBehaviour , CallBack
 		GameObject newParticles = (GameObject) Instantiate(m_JumpParticles.gameObject, m_JumpParticles.transform.position, m_JumpParticles.transform.rotation);
 
 		newParticles.particleSystem.Play ();
+
+		Camera.main.GetComponent<CameraEffect> ().DoEffect ();
     }
 
     void doubleJump()
@@ -340,6 +342,8 @@ public class PlayerMovement : MonoBehaviour , CallBack
 		GameObject newParticles = (GameObject) Instantiate(m_JumpParticles.gameObject, m_JumpParticles.transform.position, m_JumpParticles.transform.rotation);
 		
 		newParticles.particleSystem.Play ();
+
+		Camera.main.GetComponent<CameraEffect> ().DoEffect ();
     }
 
     public bool getIsGrounded()
