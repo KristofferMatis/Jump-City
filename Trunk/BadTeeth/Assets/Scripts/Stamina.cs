@@ -14,9 +14,19 @@ public class Stamina : MonoBehaviour
     const int STAMINA_REGEN_PER_TICK = 2;
     float m_Timer = STAMINA_REGEN_TICK_LENGTH;
 
+    const int MAX_ENERGY_DRINKS = 3;
+    const int ENERYGY_DRINK_RESTORATION_VALUE = 700;
+    int m_CurrentEnergyDrinks = MAX_ENERGY_DRINKS;
+
 	// Update is called once per frame
 	void Update () 
 	{
+        if (m_CurrentEnergyDrinks > 0 && InputManager.getDrinkDown())
+        {
+            m_CurrentEnergyDrinks--;
+            m_Stamina += ENERYGY_DRINK_RESTORATION_VALUE;
+        }
+
         m_Timer -= Time.deltaTime;
         if (m_Timer > 0.0f)
             return;
@@ -33,5 +43,9 @@ public class Stamina : MonoBehaviour
                 m_Stamina += STAMINA_REGEN_PER_TICK;
             }
         }
+        else if(m_Stamina > Constants.MAX_STAMINA)
+        {
+            m_Stamina -= STAMINA_REGEN_PER_TICK;
+        }       
 	}
 }
