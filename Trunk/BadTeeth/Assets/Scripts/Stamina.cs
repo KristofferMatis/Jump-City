@@ -10,8 +10,8 @@ public class Stamina : MonoBehaviour , CallBack
 		set{ m_Stamina = Mathf.Clamp (value, 0, m_Stamina); }
 	}
 
-    const float STAMINA_REGEN_TICK_LENGTH = 0.01f;
-    const int STAMINA_REGEN_PER_TICK = 5;
+    const float STAMINA_REGEN_TICK_LENGTH = 0.0125f;
+    const int STAMINA_REGEN_PER_TICK = 6;
     float m_Timer = STAMINA_REGEN_TICK_LENGTH;
 
     const int MAX_ENERGY_DRINKS = 3;
