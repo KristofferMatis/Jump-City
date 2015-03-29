@@ -11,7 +11,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 	public float m_RotationSpeed;
 	public float m_DiveKnockbackHorizontalForce;
 	public float m_DiveKnockbackVerticalForce;
-	public int m_DiveStaminaHit;
+	int m_DiveStaminaHit = Constants.POLICE_STAMINA_HIT;
 	public float m_DiveChargeDelay;
 	public float m_PoliceKnockbackTime;
 	public float m_IdleLockTime;
@@ -73,6 +73,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	bool m_HasHitPlayer;
 
+	ParticleSystem m_HitParticles;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -90,6 +92,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 			m_HitBox.gameObject.SetActive(false);
 		}
+
+		m_HitParticles = GetComponentInChildren<ParticleSystem> ();
 	}
 	
 	// Update is called once per frame
@@ -179,6 +183,10 @@ public class Police : MonoBehaviour, IHitBoxListener
 		m_HasHitPlayer = false;
 
 		m_HitBox.gameObject.SetActive(false);
+
+		float playerDirection = Mathf.Sign (m_Player.transform.position.x - transform.position.x);
+
+		m_CurrentForward.x = playerDirection;
 	}
 	
 	void EnterIdle()
@@ -365,7 +373,9 @@ public class Police : MonoBehaviour, IHitBoxListener
 		case PoliceState.e_Patrolling:
 			if((m_CollisionFlags & CollisionFlags.Sides) != 0)
 			{
-				if(m_CanClimb && Physics.Raycast(transform.position - 0.3f * transform.up, m_CurrentForward))
+				float playerDirection = Mathf.Sign(m_Player.transform.position.x - transform.position.x);
+
+				if(m_CanClimb && Mathf.Sign (m_CurrentForward.x) == playerDirection && Physics.Raycast(transform.position - 0.3f * transform.up, m_CurrentForward))
 				{
 					m_CurrentState = PoliceState.e_Climbing;
 
@@ -476,6 +486,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 			player.knockback(m_CurrentForward * m_DiveKnockbackHorizontalForce + transform.up * m_DiveKnockbackVerticalForce, m_DiveStaminaHit);
 
 			m_HasHitPlayer = true;
+
+			m_HitParticles.Play ();
 
 			if(m_AutoGetUpAfterHitPlayer)
 			{
