@@ -79,6 +79,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	ParticleSystem m_HitParticles;
 
+	Animation m_Animation;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -95,6 +97,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 		m_HitBox.gameObject.SetActive(false);
 
 		m_HitParticles = GetComponentInChildren<ParticleSystem> ();
+
+		m_Animation = GetComponentInChildren<Animation> ();
 	}
 	
 	// Update is called once per frame
@@ -161,22 +165,26 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	void EnterClimb()
 	{
-
+		m_Animation.Play ("Fly_Loop");
 	}
 	
 	void EnterFall()
 	{
-		m_KnockbackTimer = m_PoliceKnockbackTime;
+		m_Animation.Play ("Fly_Loop");
 	}
 	
 	void EnterKnockback()
 	{
+		m_KnockbackTimer = m_PoliceKnockbackTime;
 
+		m_Animation.Play ("Knockback");
 	}
 	
 	void EnterPatrol()
 	{
 		m_CurrentSpeed.x = m_CurrentForward.x * m_PatrolSpeed;
+
+		m_Animation.Play ("Run");
 	}
 
 	void EnterKnockedOut()
@@ -184,6 +192,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 		m_CurrentSpeed.x = 0.0f;
 
 		m_KnockedOutTimer = m_KnockedOutTime;
+
+		m_Animation.Play ("KnockedOut");
 	}
 	
 	void EnterTackle()
@@ -199,16 +209,22 @@ public class Police : MonoBehaviour, IHitBoxListener
 		float playerDirection = Mathf.Sign (m_Player.transform.position.x - transform.position.x);
 
 		m_CurrentForward.x = playerDirection;
+
+		m_Animation.Play ("Tackle");
 	}
 	
 	void EnterIdle()
 	{
 		m_IdleLockTimer = m_IdleLockTime;
+
+		m_Animation.Play ("Idle2");
 	}
 
 	void EnterMantle()
 	{
 		m_MantleTimer = m_MantleTime;
+
+		m_Animation.Play ("Fly_Land");
 	}
 
 	void DoClimb()
@@ -240,7 +256,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 		float playerDirection = Mathf.Sign (m_Player.transform.position.x - transform.position.x);
 
 		m_CurrentSpeed.x = playerDirection * m_PatrolSpeed;
-		m_CurrentSpeed.y = 0.0f;
+		m_CurrentSpeed.y = -0.1f;
 
 		m_CurrentForward.x = playerDirection;
 

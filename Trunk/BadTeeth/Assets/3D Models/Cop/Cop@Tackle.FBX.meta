@@ -1,0 +1,191 @@
+fileFormatVersion: 2
+guid: 8e1eb3a3d3232f84eadfc80721957145
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Baton
+    100002: CAT_Chest
+    100004: CAT_Head
+    100006: CAT_Left_Hand
+    100008: CAT_Left_Thigh
+    100010: CAT_LeftCalf
+    100012: CAT_Neck
+    100014: CAT_Pelvis
+    100016: CAT_Propeller
+    100018: CAT_Right_Arm
+    100020: CAT_Right_Calf
+    100022: CAT_Right_Collar
+    100024: CAT_Right_Hand
+    100026: CAT_Right_Thigh
+    100028: CAT_Spine_1
+    100030: CAT_Spine_2
+    100032: CAT_Spine_3
+    100034: CATRigLLegAnkle
+    100036: CATRigLLegDigit11
+    100038: CATRigRLegAnkle
+    100040: CATRigRLegDigit11
+    100042: Cop
+    100044: //RootNode
+    100046: Cylinder001
+    400000: Baton
+    400002: CAT_Chest
+    400004: CAT_Head
+    400006: CAT_Left_Hand
+    400008: CAT_Left_Thigh
+    400010: CAT_LeftCalf
+    400012: CAT_Neck
+    400014: CAT_Pelvis
+    400016: CAT_Propeller
+    400018: CAT_Right_Arm
+    400020: CAT_Right_Calf
+    400022: CAT_Right_Collar
+    400024: CAT_Right_Hand
+    400026: CAT_Right_Thigh
+    400028: CAT_Spine_1
+    400030: CAT_Spine_2
+    400032: CAT_Spine_3
+    400034: CATRigLLegAnkle
+    400036: CATRigLLegDigit11
+    400038: CATRigRLegAnkle
+    400040: CATRigRLegDigit11
+    400042: Cop
+    400044: //RootNode
+    400046: Cylinder001
+    2300000: Baton
+    3300000: Baton
+    4300000: Baton
+    4300002: Cop
+    4300004: Cylinder001
+    7400000: Tackle
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Cop
+    13700002: Cylinder001
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Tackle
+      takeName: Take 001
+      firstFrame: 1133
+      lastFrame: 1197
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CAT_Pelvis
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand/Baton
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle/CATRigLLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle/CATRigRLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Propeller
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm/CAT_Right_Hand
+        weight: 1
+      - path: Cop
+        weight: 1
+      - path: Cylinder001
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 0
+  userData: 
