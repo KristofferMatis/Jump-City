@@ -201,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         int runCost = (int)((float)Constants.RUN_COST * Time.deltaTime);
-        if (!(InputManager.getRun() && m_Stamina.stamina > runCost))
+        if (!(InputManager.getRun() && m_Stamina.stamina > runCost && m_Stamina.m_CanUseStamina)) 
         {
             m_Velocity.x = GROUNDED_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
             if (Mathf.Abs(m_Velocity.x) > 0.1f)

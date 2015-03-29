@@ -21,6 +21,10 @@ public class Stamina : MonoBehaviour , CallBack
     PlayerAnimator m_Animator;
     bool m_IsDoneDrinking = false;
 
+    const float MIN_RESET_VALUE = 0.25f;
+
+    public bool m_CanUseStamina = true;
+
     void Start()
     {
         m_Animator = gameObject.GetComponent<PlayerAnimator>();
@@ -30,7 +34,19 @@ public class Stamina : MonoBehaviour , CallBack
 	// Update is called once per frame
 	void Update () 
 	{
-        
+        if(m_Stamina < 3 && m_CanUseStamina)
+        {
+            m_CanUseStamina = false;
+        }
+        else
+        {
+            if(m_Stamina >= Constants.MAX_STAMINA * MIN_RESET_VALUE)
+            {
+                m_CanUseStamina = true;
+            }
+        }
+
+
         if (m_IsDoneDrinking && gameObject.GetComponent<PlayerMovement>().IsAllowedToMove == false)
         {
             m_CurrentEnergyDrinks--;
