@@ -376,7 +376,7 @@ public class PlayerMovement : MonoBehaviour , CallBack
 
 		if(m_Stamina.stamina == 0)
 		{
-			// TODO: death and stuff
+			Application.LoadLevel("Lose");
 		}
 	}
 }
