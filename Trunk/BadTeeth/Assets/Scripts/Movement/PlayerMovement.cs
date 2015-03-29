@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float GROUNDED_RAYCAST_DISTANCE = 0.3f;
     LayerMask m_GroundedRaycastIgnoreMask;
 
+	public ParticleSystem m_RunParticles;
+
     public enum States
     {
         Grounded,
@@ -114,6 +116,10 @@ public class PlayerMovement : MonoBehaviour
         transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
 
 		m_ExternalMovement = Vector3.zero;
+
+		Vector3 resetPosition = transform.position;
+		resetPosition.z = 0.0f;
+		transform.position = resetPosition;
 	}
 
     void LateUpdate()
@@ -192,7 +198,17 @@ public class PlayerMovement : MonoBehaviour
         {
             m_Stamina.stamina -= runCost;
             m_Velocity.x = RUN_SPEED * InputManager.getMovement() * Time.deltaTime;
+
         }
+
+		if(InputManager.getRun())
+		{
+			m_RunParticles.Play ();
+		}
+		else
+		{
+			m_RunParticles.Stop ();
+		}
     }
 
     void exitGrounded()
