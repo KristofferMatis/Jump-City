@@ -442,12 +442,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 				if(m_CanClimb && Mathf.Sign (m_CurrentForward.x) == playerDirection && Physics.Raycast(transform.position + 0.3f * transform.up, m_CurrentForward, out hitInfo))
 				{
-					Ladder ladder = hitInfo.collider.GetComponent<Ladder>();
-
-					if(ladder)
+					if(hitInfo.collider.gameObject != m_Player.gameObject)
 					{
-						ladder.CreateLadder();
-
 						m_CurrentState = PoliceState.e_Climbing;
 
 						EnterClimb ();
