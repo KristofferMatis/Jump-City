@@ -60,12 +60,14 @@ public class PlayerMovement : MonoBehaviour
 
     public float RUN_SPEED = 500.0f;
 
+    Vector3 m_ExternalMovement = Vector3.zero;
+
     #endregion
 
     Stamina m_Stamina;
 
-    List<ExternalMovement> m_ExternalMovement = new List<ExternalMovement>();
-    Vector3 m_FinalExternalMovement = Vector3.zero;
+    List<knockBackMovement> m_KnockBackMovement = new List<knockBackMovement>();
+    Vector3 m_FinalKnockBackMovement = Vector3.zero;
 
     // Use this for initialization
 	void Start () 
@@ -79,17 +81,17 @@ public class PlayerMovement : MonoBehaviour
 	void Update () 
 	{
         int i = 0;
-        m_FinalExternalMovement = Vector3.zero;
-        while (i < m_ExternalMovement.Count)
+        m_FinalKnockBackMovement = Vector3.zero;
+        while (i < m_KnockBackMovement.Count)
         {
-            m_ExternalMovement[i].update();
-            if (m_ExternalMovement[i].isExpired())
+            m_KnockBackMovement[i].update();
+            if (m_KnockBackMovement[i].isExpired())
             {
-                m_ExternalMovement.RemoveAt(i);
+                m_KnockBackMovement.RemoveAt(i);
                 continue;
             }
 
-			m_FinalExternalMovement += m_ExternalMovement[i].m_Velocity;
+            m_FinalKnockBackMovement += m_KnockBackMovement[i].m_Velocity;
 			
 			i++;
         }
@@ -108,13 +110,21 @@ public class PlayerMovement : MonoBehaviour
                 break;
         };
 
-        m_Controller.Move((m_Velocity + m_FinalExternalMovement) * Time.deltaTime);
+        m_Controller.Move((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime);
         transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
+
+		m_ExternalMovement = Vector3.zero;
 	}
 
     void LateUpdate()
     {
         m_CheckedGroundedThisFrame = false;
+    }
+
+    public void externalMovement(Vector3 velocity)
+    {
+        m_ExternalMovement += velocity;
+		m_ExternalMovement.z = 0.0f;
     }
 
     void setState(States state)
@@ -167,8 +177,13 @@ public class PlayerMovement : MonoBehaviour
 
 		m_Velocity.y -= Time.deltaTime * GRAVITY;
 
-        int runCost = (int)((float)Constants.RUN_COST * Time.deltaTime);
+        if(!m_IsAllowedToMove)
+        {
+            m_Velocity.x = 0.0f;
+            return;
+        }
 
+        int runCost = (int)((float)Constants.RUN_COST * Time.deltaTime);
         if (!(InputManager.getRun() && m_Stamina.stamina > runCost))
         {
             m_Velocity.x = GROUNDED_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
@@ -255,6 +270,7 @@ public class PlayerMovement : MonoBehaviour
         m_FloatPower = INITIAL_FLOAT_POWER;
         m_IsHodlingJump = true;
         m_Stamina.stamina -= Constants.JUMP_COST;
+        GameManager.Instance.AddThreat(Constants.JUMP_THREAT);
     }
 
     void doubleJump()
@@ -263,6 +279,7 @@ public class PlayerMovement : MonoBehaviour
         m_FloatPower = INITIAL_FLOAT_POWER;
         m_IsHodlingJump = true;
         m_Stamina.stamina -= Constants.DOUBLE_JUMP_COST;
+        GameManager.Instance.AddThreat(Constants.DOUBLE_JUMP_THREAT);
     }
 
     public bool getIsGrounded()
@@ -291,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public void knockback(Vector3 velocity, int staminaHit, float time = 1.5f)
 	{
-		m_ExternalMovement.Add(new ExternalMovement(velocity, time));
+        m_KnockBackMovement.Add(new knockBackMovement(velocity, time));
 		m_Stamina.stamina -= staminaHit;
 
 		if(m_Stamina.stamina == 0)
@@ -301,7 +318,7 @@ public class PlayerMovement : MonoBehaviour
 	}
 }
 
-class ExternalMovement
+class knockBackMovement
 {
     public Vector3 m_Velocity;
     Vector3 m_OriginalVelocity;
@@ -309,7 +326,7 @@ class ExternalMovement
     float m_TimeLeft;
     float m_OriginalTimeLeft;
 
-    public ExternalMovement(Vector3 velocity, float time)
+    public knockBackMovement(Vector3 velocity, float time)
     {
         m_Velocity = velocity;
         m_OriginalVelocity = velocity;

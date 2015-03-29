@@ -25,10 +25,17 @@ public class Sign : MonoBehaviour
 	public Material i_SourceMaterial;
     Material m_Material;
 
+    public Transform i_PlayerMount;
+
 	public bool m_IsFinished = false;
 
 	static float[] TIME_TO_PAINT = new float[]{ 1.0f, 1.5f, 2.0f, 3.0f };
     float m_PaintedTime = 0.0f;
+
+	public float NormalizedPaintedTime
+	{
+		get { return m_PaintedTime / TIME_TO_PAINT[(int)m_SignType]; }
+	}
 
 	public float PaintedTime
 	{
