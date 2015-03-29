@@ -330,6 +330,11 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 		m_DelayBeforeStepOut -= Time.deltaTime;
 
+		if((m_CollisionFlags & CollisionFlags.Below) == 0)
+		{
+			m_CurrentSpeed.y -= m_Gravity * Time.deltaTime;
+		}
+
 		if(m_DelayBeforeStepOut <= 0.0f)
 		{
 			m_CurrentSpeed = m_CurrentForward * m_StepOutSpeed;

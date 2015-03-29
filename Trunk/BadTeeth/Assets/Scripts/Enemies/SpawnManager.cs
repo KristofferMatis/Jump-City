@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SpawnManager : MonoBehaviour 
 {
 	SpawnPoint[] m_SpawnPoints;
-
+	
 	public float m_SpawnTime;
 	float m_SpawnTimer;
 
@@ -26,11 +27,22 @@ public class SpawnManager : MonoBehaviour
 			}
 			else
 			{
-				int index = Random.Range(0, m_SpawnPoints.Length);
+				int numberOfTries = 0;
 
-				m_SpawnPoints[index].SpawnPolice();
+				do
+				{
+					int index = Random.Range(0, m_SpawnPoints.Length);
 
-				m_SpawnTimer = m_SpawnTime;
+					if(m_SpawnPoints[index].IsAvailable)
+					{
+						m_SpawnPoints[index].SpawnPolice();
+
+						m_SpawnTimer = m_SpawnTime;
+					}
+
+					numberOfTries++;
+				}
+				while(m_SpawnTimer <= 0.0f && numberOfTries < m_SpawnPoints.Length * 2);
 
 				m_NumberOfPoliceSpawned++;
 			}

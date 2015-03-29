@@ -8,6 +8,14 @@ public class SpawnPoint : MonoBehaviour
 
 	Animation m_AnimatedDoor;
 
+	public bool IsAvailable
+	{
+		get
+		{
+			return !m_AnimatedDoor.isPlaying;
+		}
+	}
+
 	// Use this for initialization
 	void Start () 
 	{
