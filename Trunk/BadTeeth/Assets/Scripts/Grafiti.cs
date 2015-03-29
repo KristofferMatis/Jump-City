@@ -17,7 +17,8 @@ public class Grafiti : MonoBehaviour , CallBack
 	public ParticleSystem m_PaintParticles;
 
 	AudioSource m_Source;
-	
+
+    public AudioClip[] m_DOne;
 	public AudioClip[] m_SprayPainting;
 	public AudioClip[] m_ShakeCan;
 
@@ -47,6 +48,8 @@ public class Grafiti : MonoBehaviour , CallBack
 
 			m_PaintParticles.Stop ();
             m_Source.Stop();
+
+            m_Source.PlayOneShot(m_DOne[Random.Range(0, m_DOne.Length)]);
             return;
         }
 
