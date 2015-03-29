@@ -273,9 +273,15 @@ public class PlayerMovement : MonoBehaviour
         return m_IsGroundedThisFrame;
     }
 
-	public void knockback(Vector3 velocity, float time = 1.5f)
+	public void knockback(Vector3 velocity, int staminaHit, float time = 1.5f)
 	{
-        m_ExternalMovement.Add(new ExternalMovement(velocity, time));
+		m_ExternalMovement.Add(new ExternalMovement(velocity, time));
+		m_Stamina.stamina -= staminaHit;
+
+		if(m_Stamina.stamina == 0)
+		{
+			// TODO: death and stuff
+		}
 	}
 }
 

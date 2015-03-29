@@ -7,7 +7,7 @@ public class Stamina : MonoBehaviour
 	public int stamina
 	{
 		get{ return m_Stamina; }
-		set{ m_Stamina = value; }
+		set{ m_Stamina = Mathf.Clamp (value, 0, m_Stamina); }
 	}
 
     const float STAMINA_REGEN_TICK_LENGTH = 0.01f;

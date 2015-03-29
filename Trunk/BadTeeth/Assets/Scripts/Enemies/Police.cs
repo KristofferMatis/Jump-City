@@ -11,7 +11,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 	public float m_RotationSpeed;
 	public float m_DiveKnockbackHorizontalForce;
 	public float m_DiveKnockbackVerticalForce;
-	public float m_DiveStaminaHit;
+	public int m_DiveStaminaHit;
 	public float m_DiveChargeDelay;
 	public float m_PoliceKnockbackTime;
 	public float m_IdleLockTime;
@@ -473,7 +473,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 		if(!m_HasHitPlayer && player)
 		{
-			player.knockback(m_CurrentForward * m_DiveKnockbackHorizontalForce + transform.up * m_DiveKnockbackVerticalForce);
+			player.knockback(m_CurrentForward * m_DiveKnockbackHorizontalForce + transform.up * m_DiveKnockbackVerticalForce, m_DiveStaminaHit);
 
 			m_HasHitPlayer = true;
 
