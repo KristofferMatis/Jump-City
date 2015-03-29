@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool m_IsGroundedThisFrame;
     bool m_CheckedGroundedThisFrame = false;
-    const float GROUNDED_RAYCAST_DISTANCE = 0.217f;
+    public float GROUNDED_RAYCAST_DISTANCE = 0.3f;
     LayerMask m_GroundedRaycastIgnoreMask;
 
     public enum States
@@ -257,10 +257,10 @@ public class PlayerMovement : MonoBehaviour
 #if DEBUG || UNITY_EDITOR
             RaycastHit hitInfo;
 #endif
-            if (m_Controller.isGrounded || Physics.Raycast(transform.position, Vector3.down, out hitInfo, GROUNDED_RAYCAST_DISTANCE, ~m_GroundedRaycastIgnoreMask.value))
+            if (/*m_Controller.isGrounded || */Physics.Raycast(transform.position, Vector3.down, out hitInfo, GROUNDED_RAYCAST_DISTANCE, ~m_GroundedRaycastIgnoreMask.value))
             {
 				m_IsGroundedThisFrame = true;
-				m_Velocity.y = 0.0f;
+                m_Velocity.y = m_Velocity.y < 0.0f ? 0.0f : m_Velocity.y;
             }
 			else
 			{
