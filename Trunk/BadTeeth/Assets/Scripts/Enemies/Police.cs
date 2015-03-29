@@ -410,7 +410,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 			{
 				float playerDirection = Mathf.Sign(m_Player.transform.position.x - transform.position.x);
 
-				if(m_CanClimb && Mathf.Sign (m_CurrentForward.x) == playerDirection && Physics.Raycast(transform.position - 0.3f * transform.up, m_CurrentForward))
+				if(m_CanClimb && Mathf.Sign (m_CurrentForward.x) == playerDirection && Physics.Raycast(transform.position + 0.3f * transform.up, m_CurrentForward))
 				{
 					m_CurrentState = PoliceState.e_Climbing;
 

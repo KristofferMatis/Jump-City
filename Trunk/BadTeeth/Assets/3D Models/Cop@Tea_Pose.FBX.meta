@@ -1,0 +1,110 @@
+fileFormatVersion: 2
+guid: 1a8b01f2c12f7cf439c9fb032420b04d
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Baton
+    100002: CAT_Chest
+    100004: CAT_Head
+    100006: CAT_Left_Hand
+    100008: CAT_Left_Thigh
+    100010: CAT_LeftCalf
+    100012: CAT_Neck
+    100014: CAT_Pelvis
+    100016: CAT_Right_Arm
+    100018: CAT_Right_Calf
+    100020: CAT_Right_Collar
+    100022: CAT_Right_Hand
+    100024: CAT_Right_Thigh
+    100026: CAT_Spine_1
+    100028: CAT_Spine_2
+    100030: CAT_Spine_3
+    100032: CATRigLLegAnkle
+    100034: CATRigLLegDigit11
+    100036: CATRigRLegAnkle
+    100038: CATRigRLegDigit11
+    100040: Cop
+    100042: //RootNode
+    400000: Baton
+    400002: CAT_Chest
+    400004: CAT_Head
+    400006: CAT_Left_Hand
+    400008: CAT_Left_Thigh
+    400010: CAT_LeftCalf
+    400012: CAT_Neck
+    400014: CAT_Pelvis
+    400016: CAT_Right_Arm
+    400018: CAT_Right_Calf
+    400020: CAT_Right_Collar
+    400022: CAT_Right_Hand
+    400024: CAT_Right_Thigh
+    400026: CAT_Spine_1
+    400028: CAT_Spine_2
+    400030: CAT_Spine_3
+    400032: CATRigLLegAnkle
+    400034: CATRigLLegDigit11
+    400036: CATRigRLegAnkle
+    400038: CATRigRLegDigit11
+    400040: Cop
+    400042: //RootNode
+    2300000: Baton
+    3300000: Baton
+    4300000: Baton
+    4300002: Cop
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Cop
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
