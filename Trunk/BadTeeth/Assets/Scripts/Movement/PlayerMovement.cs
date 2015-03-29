@@ -119,6 +119,11 @@ public class PlayerMovement : MonoBehaviour
         m_Controller.Move((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime);
         transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
 
+		if(m_FinalKnockBackMovement.x != 0.0f)
+		{
+			transform.forward = - Vector3.right * Mathf.Sign (m_FinalKnockBackMovement.x);
+		}
+
         m_Animator.setSpeed(((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime).magnitude);
 
 		m_ExternalMovement = Vector3.zero;
@@ -305,7 +310,9 @@ public class PlayerMovement : MonoBehaviour
 
         m_Animator.playAnimation(PlayerAnimator.Animations.Jump);
 
-		m_JumpParticles.Play ();
+		GameObject newParticles = (GameObject) Instantiate(m_JumpParticles.gameObject, m_JumpParticles.transform.position, m_JumpParticles.transform.rotation);
+
+		newParticles.particleSystem.Play ();
     }
 
     void doubleJump()
@@ -318,7 +325,9 @@ public class PlayerMovement : MonoBehaviour
 
 		m_Animator.playAnimation(PlayerAnimator.Animations.Double_Jump);
 		
-		m_JumpParticles.Play ();
+		GameObject newParticles = (GameObject) Instantiate(m_JumpParticles.gameObject, m_JumpParticles.transform.position, m_JumpParticles.transform.rotation);
+		
+		newParticles.particleSystem.Play ();
     }
 
     public bool getIsGrounded()
