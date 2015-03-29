@@ -27,24 +27,29 @@ public class SpawnManager : MonoBehaviour
 			}
 			else
 			{
-				int numberOfTries = 0;
+				float spawnPointDistance = Mathf.Infinity;
+				int index = -1;
 
-				do
+				for(int i = 0; i < m_SpawnPoints.Length; i++)
 				{
-					int index = Random.Range(0, m_SpawnPoints.Length);
+					float distance = Mathf.Abs(m_SpawnPoints[i].transform.position.x - getPlayer.Instance.transform.position.x);
 
-					if(m_SpawnPoints[index].IsAvailable)
+					if(distance < spawnPointDistance && m_SpawnPoints[i].IsAvailable)
 					{
-						m_SpawnPoints[index].SpawnPolice();
+						spawnPointDistance = distance;
 
-						m_SpawnTimer = m_SpawnTime;
+						index = i;
 					}
-
-					numberOfTries++;
 				}
-				while(m_SpawnTimer <= 0.0f && numberOfTries < m_SpawnPoints.Length * 2);
 
-				m_NumberOfPoliceSpawned++;
+				if(index != -1)
+				{
+					m_SpawnPoints[index].SpawnPolice();
+
+					m_SpawnTimer = m_SpawnTime;
+
+					m_NumberOfPoliceSpawned++;
+				}
 			}
 		}
 	}
