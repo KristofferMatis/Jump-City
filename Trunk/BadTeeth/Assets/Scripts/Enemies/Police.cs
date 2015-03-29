@@ -11,11 +11,12 @@ public class Police : MonoBehaviour, IHitBoxListener
 	public float m_RotationSpeed;
 	public float m_DiveKnockbackHorizontalForce;
 	public float m_DiveKnockbackVerticalForce;
-	int m_DiveStaminaHit = Constants.POLICE_STAMINA_HIT;
 	public float m_DiveChargeDelay;
 	public float m_PoliceKnockbackTime;
 	public float m_IdleLockTime;
 	public float m_MantleTime;
+	public float m_DelayBeforeStepOut;
+	public float m_StepOutSpeed;
 
 	public Vector3 m_MantleOffset;
 
@@ -38,6 +39,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 	CharacterController m_Controller;
 
 	Vector3 m_CurrentForward;
+	
+	int m_DiveStaminaHit = Constants.POLICE_STAMINA_HIT;
 
 	enum PoliceState
 	{
@@ -48,7 +51,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 		e_Falling,
 		e_Knockback,
 		e_Mantle,
-		e_KnockedOut
+		e_KnockedOut,
+		e_StepOutside
 	}
 
 	PoliceState m_CurrentState;
@@ -80,7 +84,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 	{
 		m_Player = getPlayer.Instance.gameObject.GetComponent<PlayerMovement>();
 
-		m_CurrentState = PoliceState.e_Idle;
+		m_CurrentState = PoliceState.e_StepOutside;
 
 		m_Controller = GetComponent<CharacterController> ();
 
@@ -131,6 +135,10 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 		case PoliceState.e_KnockedOut:
 			DoKnockedOut();
+			break;
+
+		case PoliceState.e_StepOutside:
+			DoStepOutside();
 			break;
 		}
 		
@@ -314,6 +322,31 @@ public class Police : MonoBehaviour, IHitBoxListener
 	void DoKnockedOut()
 	{
 		m_KnockedOutTimer -= Time.deltaTime;
+	}
+
+	void DoStepOutside()
+	{
+		m_CurrentForward = Vector3.back;
+
+		m_DelayBeforeStepOut -= Time.deltaTime;
+
+		if(m_DelayBeforeStepOut <= 0.0f)
+		{
+			m_CurrentSpeed = m_CurrentForward * m_StepOutSpeed;
+
+			if(transform.position.z <= 0.0f)
+			{
+				m_CurrentState = PoliceState.e_Patrolling;
+
+				EnterPatrol ();
+
+				Vector3 newPosition = transform.position;
+				newPosition.z = 0.0f;
+				transform.position = newPosition;
+
+				m_CurrentSpeed.z = 0.0f;
+			}
+		}
 	}
 
 	void UpdateStateForCollision()

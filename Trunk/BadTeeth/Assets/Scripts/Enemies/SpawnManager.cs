@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 public class SpawnManager : MonoBehaviour 
 {
-	public GameObject m_PolicePrefab;
-
-	List<Transform> m_SpawnPoints;
+	SpawnPoint[] m_SpawnPoints;
 
 	public float m_SpawnTime;
 	float m_SpawnTimer;
@@ -15,12 +12,7 @@ public class SpawnManager : MonoBehaviour
 
 	void Start()
 	{
-		m_SpawnPoints = new List<Transform> ();
-
-		foreach(Transform child in transform)
-		{
-			m_SpawnPoints.Add (child);
-		}
+		m_SpawnPoints = GetComponentsInChildren<SpawnPoint> ();
 	}
 	
 	// Update is called once per frame
@@ -34,9 +26,9 @@ public class SpawnManager : MonoBehaviour
 			}
 			else
 			{
-				int index = Random.Range(0, m_SpawnPoints.Count);
+				int index = Random.Range(0, m_SpawnPoints.Length);
 
-				Instantiate (m_PolicePrefab, m_SpawnPoints[index].position, Quaternion.identity);
+				m_SpawnPoints[index].SpawnPolice();
 
 				m_SpawnTimer = m_SpawnTime;
 
