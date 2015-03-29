@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     LayerMask m_GroundedRaycastIgnoreMask;
 
 	public ParticleSystem m_RunParticles;
+	public ParticleSystem m_JumpParticles;
 
     public enum States
     {
@@ -303,6 +304,8 @@ public class PlayerMovement : MonoBehaviour
         GameManager.Instance.AddThreat(Constants.JUMP_THREAT);
 
         m_Animator.playAnimation(PlayerAnimator.Animations.Jump);
+
+		m_JumpParticles.Play ();
     }
 
     void doubleJump()
@@ -313,7 +316,9 @@ public class PlayerMovement : MonoBehaviour
         m_Stamina.stamina -= Constants.DOUBLE_JUMP_COST;
         GameManager.Instance.AddThreat(Constants.DOUBLE_JUMP_THREAT);
 
-        m_Animator.playAnimation(PlayerAnimator.Animations.Double_Jump);
+		m_Animator.playAnimation(PlayerAnimator.Animations.Double_Jump);
+		
+		m_JumpParticles.Play ();
     }
 
     public bool getIsGrounded()
