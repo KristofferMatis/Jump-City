@@ -487,7 +487,13 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 			m_HasHitPlayer = true;
 
+			Vector3 newPosition = m_HitParticles.transform.position;
+			newPosition.z = -0.5f;
+			m_HitParticles.transform.position = newPosition;
+
 			m_HitParticles.Play ();
+
+			m_CurrentSpeed.x = 0.0f;
 
 			if(m_AutoGetUpAfterHitPlayer)
 			{
