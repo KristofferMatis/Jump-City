@@ -367,8 +367,13 @@ public class PlayerMovement : MonoBehaviour , CallBack
 
 	public void knockback(Vector3 velocity, int staminaHit, float time = 1.5f)
 	{
+		if(m_KnockBackMovement.Count == 0)
+		{
+			m_Stamina.stamina -= staminaHit;
+		}
+
         m_KnockBackMovement.Add(new knockBackMovement(velocity, time));
-		m_Stamina.stamina -= staminaHit;
+
         m_Animator.playAnimation(PlayerAnimator.Animations.Knockback);
 
 		m_KnocbackForwardX = (int) - Mathf.Sign (velocity.x);

@@ -3,7 +3,20 @@ using System.Collections;
 
 public class InputSelect : MonoBehaviour 
 {
+	AudioSource m_Source;
+	public AudioClip clip;
+
 	public string m_nextLevel = "Game";
+
+	void Start()
+	{
+		m_Source = gameObject.AddComponent<AudioSource> ();
+		m_Source.clip = clip;
+		m_Source.loop = true;
+		m_Source.Play();
+
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
