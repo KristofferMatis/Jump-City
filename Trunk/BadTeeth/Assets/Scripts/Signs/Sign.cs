@@ -67,7 +67,7 @@ public class Sign : MonoBehaviour
 				if(m_LineRenderer != null)
 				{
 					taggedSigned++;
-					if (taggedSigned == numSigns) 
+					if (taggedSigned >= numSigns) 
 					{
 						Application.LoadLevel("Win");
 					}
