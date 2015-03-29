@@ -22,6 +22,7 @@ public class Punch : MonoBehaviour, IHitBoxListener
 	Stamina m_Stamina;
     PlayerAnimator m_Animator;
 
+    
     public AudioClip[] m_PunchClips;
     AudioSource m_Source;
 	void Start()

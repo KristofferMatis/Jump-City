@@ -81,6 +81,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 	Animation m_Animation;
 
+    public AudioClip[] m_EnterPatrol;
     public AudioClip[] HurtClips;
     public AudioClip[] AttackClips;
     AudioSource m_Source;
@@ -189,7 +190,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 	void EnterPatrol()
 	{
 		m_CurrentSpeed.x = m_CurrentForward.x * m_PatrolSpeed;
-
+        m_Source.PlayOneShot(m_EnterPatrol[Random.Range(0, m_EnterPatrol.Length)]);
 		m_Animation.Play ("Run");
 	}
 
