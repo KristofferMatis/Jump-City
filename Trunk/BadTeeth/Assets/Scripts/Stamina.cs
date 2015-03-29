@@ -11,7 +11,7 @@ public class Stamina : MonoBehaviour , CallBack
 	}
 
     const float STAMINA_REGEN_TICK_LENGTH = 0.01f;
-    const int STAMINA_REGEN_PER_TICK = 2;
+    const int STAMINA_REGEN_PER_TICK = 5;
     float m_Timer = STAMINA_REGEN_TICK_LENGTH;
 
     const int MAX_ENERGY_DRINKS = 3;
@@ -25,10 +25,15 @@ public class Stamina : MonoBehaviour , CallBack
 
     public bool m_CanUseStamina = true;
 
+	AudioSource m_Source;
+	
+	public AudioClip[] m_chugging;
+
     void Start()
     {
         m_Animator = gameObject.GetComponent<PlayerAnimator>();
         GetComponentInChildren<AnimationCallBackManager>().registerCallBack(this);
+		m_Source = gameObject.AddComponent<AudioSource> ();
     }
 
 	// Update is called once per frame
@@ -59,6 +64,7 @@ public class Stamina : MonoBehaviour , CallBack
 
         if (m_CurrentEnergyDrinks > 0 && InputManager.getDrinkDown())
         {       
+			m_Source.PlayOneShot(m_chugging[Random.Range(0,m_chugging.Length)]);
             m_Animator.playAnimation(PlayerAnimator.Animations.Drink);
             gameObject.GetComponent<PlayerMovement>().IsAllowedToMove = false;
         }

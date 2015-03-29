@@ -11,11 +11,17 @@ public class HUD : MonoBehaviour
     Vector2 i_StaminaBarPosition = new Vector2(0.004f, 0.01f);
 	Vector2 i_StaminaBarScale = new Vector2(0.30f, 0.03f);
 
+	public AudioClip music;
+	AudioSource source;
 	// Use this for initialization
 	void Start () 
     {
         m_StaminaTextures = Resources.LoadAll<Texture>(STAMINA_TEXTURES_PATH);
 		m_Stamina = getPlayer.Instance.gameObject.GetComponent<Stamina> ();
+		source = gameObject.AddComponent<AudioSource> ();
+		source.clip = music;
+		source.loop = true;
+		source.Play ();
 	}
 
     void OnGUI()

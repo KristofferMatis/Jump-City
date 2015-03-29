@@ -16,11 +16,18 @@ public class Grafiti : MonoBehaviour , CallBack
 
 	public ParticleSystem m_PaintParticles;
 
+	AudioSource m_Source;
+	
+	public AudioClip[] m_SprayPainting;
+	public AudioClip[] m_ShakeCan;
+
     void Start()
     {
         m_PlayerMovement = gameObject.GetComponent<PlayerMovement>();
         m_Animator = gameObject.GetComponent<PlayerAnimator>();
         gameObject.GetComponentInChildren<AnimationCallBackManager>().registerCallBack(this);
+
+		m_Source = gameObject.AddComponent<AudioSource> ();
     }
 
 	// Update is called once per frame
@@ -39,7 +46,7 @@ public class Grafiti : MonoBehaviour , CallBack
             m_Animator.playAnimation(PlayerAnimator.Animations.BlankMisc);
 
 			m_PaintParticles.Stop ();
-
+            m_Source.Stop();
             return;
         }
 
@@ -61,6 +68,11 @@ public class Grafiti : MonoBehaviour , CallBack
                 else
                 {
                     m_Animator.playAnimation(PlayerAnimator.Animations.Shake_Can);
+                    if (!m_Source.isPlaying)
+                    {
+                        m_Source.clip = m_ShakeCan[Random.Range(0, m_ShakeCan.Length)];
+                        m_Source.Play();
+                    }
                 }
             }
             else
@@ -87,6 +99,8 @@ public class Grafiti : MonoBehaviour , CallBack
         if(callBack == CallBackEvents.Shake_Done)
         {
             m_DoneShaking = true;
+            m_Source.Stop();
+			m_Source.PlayOneShot(m_SprayPainting[ Random.Range(0,m_SprayPainting.Length)]);
         }
     }
 

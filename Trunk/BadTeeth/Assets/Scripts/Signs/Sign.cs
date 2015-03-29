@@ -12,6 +12,9 @@ public class Sign : MonoBehaviour
         Count
     };
 
+	static int numSigns = 0;
+	static int taggedSigned = 0;
+
     public SignType m_SignType = SignType.Hanging;
 
 	static string[] MAIN_TEXTURES_FILE_PATHS = new string[]                 { "Textures/SignTextures/Poster/Main",   "Textures/SignTextures/Hanging/Main",    "Textures/SignTextures/Welcome/Main",   "Textures/SignTextures/BillBoard/Main"};
@@ -63,6 +66,11 @@ public class Sign : MonoBehaviour
 			{
 				if(m_LineRenderer != null)
 				{
+					taggedSigned++;
+					if (taggedSigned == numSigns) 
+					{
+						Application.LoadLevel("Win");
+					}
 					Destroy(m_LineRenderer);
 					m_LineRenderer = null;
 				}
@@ -77,6 +85,8 @@ public class Sign : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
+		numSigns++;
+
         m_Material = new Material(i_SourceMaterial);
 
 	    if(m_MainTextures[(int)m_SignType] == null)
@@ -106,7 +116,6 @@ public class Sign : MonoBehaviour
 		
 		PaintedTime = m_PaintedTime;
 	}
-
 
 	void updateLine()
 	{
