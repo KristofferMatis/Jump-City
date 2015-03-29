@@ -71,12 +71,15 @@ public class PlayerMovement : MonoBehaviour
     List<knockBackMovement> m_KnockBackMovement = new List<knockBackMovement>();
     Vector3 m_FinalKnockBackMovement = Vector3.zero;
 
+    PlayerAnimator m_Animator;
+
     // Use this for initialization
 	void Start () 
 	{
 		m_Controller = gameObject.GetComponent<CharacterController> ();
 		m_GroundedRaycastIgnoreMask = LayerMask.GetMask("Player", "Ignore Raycast");
         m_Stamina = gameObject.GetComponent<Stamina>();
+        m_Animator = gameObject.GetComponent<PlayerAnimator>();
 	}
 	
 	// Update is called once per frame
@@ -114,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
 
         m_Controller.Move((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime);
         transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
+
+        m_Animator.setSpeed(((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime).magnitude);
 
 		m_ExternalMovement = Vector3.zero;
 
@@ -193,12 +198,21 @@ public class PlayerMovement : MonoBehaviour
         if (!(InputManager.getRun() && m_Stamina.stamina > runCost))
         {
             m_Velocity.x = GROUNDED_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
+            if (Mathf.Abs(m_Velocity.x) > 0.1f)
+            {
+                m_Animator.playAnimation(PlayerAnimator.Animations.Run);
+            }
+            else
+            {
+                m_Animator.playAnimation(PlayerAnimator.Animations.Idle);
+            }
         }
         else
         {
             m_Stamina.stamina -= runCost;
             m_Velocity.x = RUN_SPEED * InputManager.getMovement() * Time.deltaTime;
 
+            m_Animator.playAnimation(PlayerAnimator.Animations.Sprint);
         }
 
 		if(InputManager.getRun())
@@ -287,6 +301,8 @@ public class PlayerMovement : MonoBehaviour
         m_IsHodlingJump = true;
         m_Stamina.stamina -= Constants.JUMP_COST;
         GameManager.Instance.AddThreat(Constants.JUMP_THREAT);
+
+        m_Animator.playAnimation(PlayerAnimator.Animations.Jump);
     }
 
     void doubleJump()
@@ -296,6 +312,8 @@ public class PlayerMovement : MonoBehaviour
         m_IsHodlingJump = true;
         m_Stamina.stamina -= Constants.DOUBLE_JUMP_COST;
         GameManager.Instance.AddThreat(Constants.DOUBLE_JUMP_THREAT);
+
+        m_Animator.playAnimation(PlayerAnimator.Animations.Double_Jump);
     }
 
     public bool getIsGrounded()

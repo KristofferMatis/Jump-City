@@ -1,0 +1,210 @@
+fileFormatVersion: 2
+guid: 600a09d79f1b2b841a0f54c509289004
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: Body
+    100002: Can
+    100004: CAT_Bandana_1
+    100006: CAT_Bandana_2
+    100008: CAT_Bandana_3
+    100010: CAT_Bandana_4
+    100012: CAT_Bandana_5
+    100014: CAT_Chest
+    100016: CAT_Head
+    100018: CAT_Left_Hand
+    100020: CAT_Left_Thigh
+    100022: CAT_LeftCalf
+    100024: CAT_Neck
+    100026: CAT_Pelvis
+    100028: CAT_Right_Arm
+    100030: CAT_Right_Calf
+    100032: CAT_Right_Collar
+    100034: CAT_Right_Hand
+    100036: CAT_Right_Thigh
+    100038: CAT_Spine_1
+    100040: CAT_Spine_2
+    100042: CAT_Spine_3
+    100044: CATRigLLegAnkle
+    100046: CATRigLLegDigit11
+    100048: CATRigRLegAnkle
+    100050: CATRigRLegDigit11
+    100052: //RootNode
+    100054: Guy
+    100056: Head
+    400000: Body
+    400002: Can
+    400004: CAT_Bandana_1
+    400006: CAT_Bandana_2
+    400008: CAT_Bandana_3
+    400010: CAT_Bandana_4
+    400012: CAT_Bandana_5
+    400014: CAT_Chest
+    400016: CAT_Head
+    400018: CAT_Left_Hand
+    400020: CAT_Left_Thigh
+    400022: CAT_LeftCalf
+    400024: CAT_Neck
+    400026: CAT_Pelvis
+    400028: CAT_Right_Arm
+    400030: CAT_Right_Calf
+    400032: CAT_Right_Collar
+    400034: CAT_Right_Hand
+    400036: CAT_Right_Thigh
+    400038: CAT_Spine_1
+    400040: CAT_Spine_2
+    400042: CAT_Spine_3
+    400044: CATRigLLegAnkle
+    400046: CATRigLLegDigit11
+    400048: CATRigRLegAnkle
+    400050: CATRigRLegDigit11
+    400052: //RootNode
+    400054: Guy
+    400056: Head
+    2300000: Can
+    3300000: Can
+    4300000: Can
+    4300002: Head
+    4300004: Body
+    7400000: Sprint
+    9500000: //RootNode
+    13700000: Body
+    13700002: Head
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Sprint
+      takeName: Take 001
+      firstFrame: 143
+      lastFrame: 167
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Body
+        weight: 1
+      - path: CAT_Pelvis
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Hand/Can
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Left_Thigh/CAT_LeftCalf/CATRigLLegAnkle/CATRigLLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle
+        weight: 1
+      - path: CAT_Pelvis/CAT_Right_Thigh/CAT_Right_Calf/CATRigRLegAnkle/CATRigRLegDigit11
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3/CAT_Bandana_4
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Neck/CAT_Head/CAT_Bandana_1/CAT_Bandana_2/CAT_Bandana_3/CAT_Bandana_4/CAT_Bandana_5
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm
+        weight: 1
+      - path: CAT_Pelvis/CAT_Spine_1/CAT_Spine_2/CAT_Spine_3/CAT_Chest/CAT_Right_Collar/CAT_Right_Arm/CAT_Right_Hand
+        weight: 1
+      - path: Guy
+        weight: 1
+      - path: Guy/Head
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
