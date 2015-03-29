@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     public float GROUNDED_RAYCAST_DISTANCE = 0.3f;
     LayerMask m_GroundedRaycastIgnoreMask;
 
+	public ParticleSystem m_RunParticles;
+	public ParticleSystem m_JumpParticles;
+
     public enum States
     {
         Grounded,
@@ -119,6 +122,10 @@ public class PlayerMovement : MonoBehaviour
         m_Animator.setSpeed(((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime).magnitude);
 
 		m_ExternalMovement = Vector3.zero;
+
+		Vector3 resetPosition = transform.position;
+		resetPosition.z = 0.0f;
+		transform.position = resetPosition;
 	}
 
     void LateUpdate()
@@ -208,6 +215,15 @@ public class PlayerMovement : MonoBehaviour
 
             m_Animator.playAnimation(PlayerAnimator.Animations.Sprint);
         }
+
+		if(InputManager.getRun())
+		{
+			m_RunParticles.Play ();
+		}
+		else
+		{
+			m_RunParticles.Stop ();
+		}
     }
 
     void exitGrounded()
@@ -288,6 +304,8 @@ public class PlayerMovement : MonoBehaviour
         GameManager.Instance.AddThreat(Constants.JUMP_THREAT);
 
         m_Animator.playAnimation(PlayerAnimator.Animations.Jump);
+
+		m_JumpParticles.Play ();
     }
 
     void doubleJump()
@@ -298,7 +316,9 @@ public class PlayerMovement : MonoBehaviour
         m_Stamina.stamina -= Constants.DOUBLE_JUMP_COST;
         GameManager.Instance.AddThreat(Constants.DOUBLE_JUMP_THREAT);
 
-        m_Animator.playAnimation(PlayerAnimator.Animations.Double_Jump);
+		m_Animator.playAnimation(PlayerAnimator.Animations.Double_Jump);
+		
+		m_JumpParticles.Play ();
     }
 
     public bool getIsGrounded()

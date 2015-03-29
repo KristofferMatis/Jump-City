@@ -148,6 +148,13 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 		transform.forward = m_CurrentForward;
 
+		if(m_CurrentState != PoliceState.e_StepOutside)
+		{
+			Vector3 resetPosition = transform.position;
+			resetPosition.z = 0.0f;
+			transform.position = resetPosition;
+		}
+
 		UpdateStateForCollision ();
 		UpdateStateForEvents ();
 	}
