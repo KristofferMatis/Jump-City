@@ -82,6 +82,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 	Animation m_Animation;
 
     public AudioClip[] HurtClips;
+    public AudioClip[] AttackClips;
     AudioSource m_Source;
 
 	// Use this for initialization
@@ -288,6 +289,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 				m_DiveTimer = m_DiveTime;
 
 				m_HitBox.gameObject.SetActive(true);
+                m_Source.PlayOneShot(AttackClips[Random.Range(0, AttackClips.Length)]);
 			}
 		}
 		else if(m_DiveTimer > 0.0f)
