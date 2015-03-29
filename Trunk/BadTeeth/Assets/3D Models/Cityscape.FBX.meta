@@ -1,0 +1,218 @@
+fileFormatVersion: 2
+guid: ce99159bf8e8db04ab3832e9fd613dad
+ModelImporter:
+  serializedVersion: 16
+  fileIDToRecycleName:
+    100000: 1 - Start
+    100002: 10 - 10.5x10
+    100004: 11 - 10.5x10
+    100006: 12 - 10.5x10
+    100008: 13 - 14x10
+    100010: 14 - 17.5x10
+    100012: 15 - 10.5x5
+    100014: 16 - 7x10
+    100016: 18 - 17.5x10
+    100018: 19 - 10.5x011
+    100020: 2 - 14x10
+    100022: 20 - 10.5x011
+    100024: 21 - 10.5x011
+    100026: 3 - 10.5x10
+    100028: 4 - 17.5x10
+    100030: 5 - 14x10
+    100032: 6 - 10.5x10
+    100034: 7 - 7x10
+    100036: 8 - 10.5x5
+    100038: 9 - 14x10
+    100040: Box002
+    100042: Box003
+    100044: Box004
+    100046: Box005
+    100048: Box006
+    100050: Box007
+    100052: //RootNode
+    400000: 1 - Start
+    400002: 10 - 10.5x10
+    400004: 11 - 10.5x10
+    400006: 12 - 10.5x10
+    400008: 13 - 14x10
+    400010: 14 - 17.5x10
+    400012: 15 - 10.5x5
+    400014: 16 - 7x10
+    400016: 18 - 17.5x10
+    400018: 19 - 10.5x011
+    400020: 2 - 14x10
+    400022: 20 - 10.5x011
+    400024: 21 - 10.5x011
+    400026: 3 - 10.5x10
+    400028: 4 - 17.5x10
+    400030: 5 - 14x10
+    400032: 6 - 10.5x10
+    400034: 7 - 7x10
+    400036: 8 - 10.5x5
+    400038: 9 - 14x10
+    400040: Box002
+    400042: Box003
+    400044: Box004
+    400046: Box005
+    400048: Box006
+    400050: Box007
+    400052: //RootNode
+    2300000: 1 - Start
+    2300002: 10 - 10.5x10
+    2300004: 11 - 10.5x10
+    2300006: 12 - 10.5x10
+    2300008: 13 - 14x10
+    2300010: 14 - 17.5x10
+    2300012: 15 - 10.5x5
+    2300014: 16 - 7x10
+    2300016: 18 - 17.5x10
+    2300018: 19 - 10.5x011
+    2300020: 2 - 14x10
+    2300022: 20 - 10.5x011
+    2300024: 21 - 10.5x011
+    2300026: 3 - 10.5x10
+    2300028: 4 - 17.5x10
+    2300030: 5 - 14x10
+    2300032: 6 - 10.5x10
+    2300034: 7 - 7x10
+    2300036: 8 - 10.5x5
+    2300038: 9 - 14x10
+    2300040: Box002
+    2300042: Box003
+    2300044: Box004
+    2300046: Box005
+    2300048: Box006
+    2300050: Box007
+    3300000: 1 - Start
+    3300002: 10 - 10.5x10
+    3300004: 11 - 10.5x10
+    3300006: 12 - 10.5x10
+    3300008: 13 - 14x10
+    3300010: 14 - 17.5x10
+    3300012: 15 - 10.5x5
+    3300014: 16 - 7x10
+    3300016: 18 - 17.5x10
+    3300018: 19 - 10.5x011
+    3300020: 2 - 14x10
+    3300022: 20 - 10.5x011
+    3300024: 21 - 10.5x011
+    3300026: 3 - 10.5x10
+    3300028: 4 - 17.5x10
+    3300030: 5 - 14x10
+    3300032: 6 - 10.5x10
+    3300034: 7 - 7x10
+    3300036: 8 - 10.5x5
+    3300038: 9 - 14x10
+    3300040: Box002
+    3300042: Box003
+    3300044: Box004
+    3300046: Box005
+    3300048: Box006
+    3300050: Box007
+    4300000: 1 - Start
+    4300002: 2 - 14x10
+    4300004: 3 - 10.5x10
+    4300006: 4 - 17.5x10
+    4300008: 5 - 14x10
+    4300010: 6 - 10.5x10
+    4300012: 7 - 7x10
+    4300014: 8 - 10.5x5
+    4300016: 9 - 14x10
+    4300018: 10 - 10.5x10
+    4300020: 11 - 10.5x10
+    4300022: 12 - 10.5x10
+    4300024: 13 - 14x10
+    4300026: 14 - 17.5x10
+    4300028: 15 - 10.5x5
+    4300030: 16 - 7x10
+    4300032: 18 - 17.5x10
+    4300034: 19 - 10.5x011
+    4300036: 20 - 10.5x011
+    4300038: 21 - 10.5x011
+    4300040: Box002
+    4300042: Box003
+    4300044: Box004
+    4300046: Box005
+    4300048: Box006
+    4300050: Box007
+    6400000: 1 - Start
+    6400002: 10 - 10.5x10
+    6400004: 11 - 10.5x10
+    6400006: 12 - 10.5x10
+    6400008: 13 - 14x10
+    6400010: 14 - 17.5x10
+    6400012: 15 - 10.5x5
+    6400014: 16 - 7x10
+    6400016: 18 - 17.5x10
+    6400018: 19 - 10.5x011
+    6400020: 2 - 14x10
+    6400022: 20 - 10.5x011
+    6400024: 21 - 10.5x011
+    6400026: 3 - 10.5x10
+    6400028: 4 - 17.5x10
+    6400030: 5 - 14x10
+    6400032: 6 - 10.5x10
+    6400034: 7 - 7x10
+    6400036: 8 - 10.5x5
+    6400038: 9 - 14x10
+    6400040: Box002
+    6400042: Box003
+    6400044: Box004
+    6400046: Box005
+    6400048: Box006
+    6400050: Box007
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
