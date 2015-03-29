@@ -50,7 +50,7 @@
 				float4 grafiti = tex2D (_GrafitiTexture, IN.uv_MainTex);
 				float4 greyScale =  tex2D (_GrafitiGreyScale, IN.uv_MainTex);
 			
-				float4 c = (greyScale.r <= _PercentPainted && grafiti.a > 0.0f) ? (_PercentPainted == 1.0f) ? grafiti : grafiti * 0.75f : main;
+				float4 c = (greyScale.r <= _PercentPainted && grafiti.a > 0.0f) ? (_PercentPainted == 1.0f) ? grafiti : grafiti * 0.75f : (greyScale.r <= (_PercentPainted + 0.2f) && grafiti.a > 0.0f && _PercentPainted > 0.01f) ? (main * (1.0f-greyScale.r)) +  (grafiti * greyScale.r): main;
 				
 				return c;
 			}

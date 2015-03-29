@@ -8,6 +8,30 @@ public static class InputManager
     public static bool IsUsingKeyboard = false;
 
     #region public inputs
+    public static bool getRun()
+    {
+        if (IsUsingKeyboard)
+            return getKeyboardRun();
+        else
+            return getGamePadRun();
+    }
+
+    public static bool getRunUp()
+    {
+        if (IsUsingKeyboard)
+            return getKeyboardRunUp();
+        else
+            return getGamePadRunUp();
+    }
+
+    public static bool getRunDown()
+    {
+        if (IsUsingKeyboard)
+            return getKeyboardRunDown();
+        else
+            return getGamePadRunDown();
+    }
+
     public static bool getJump()
     {
         if (IsUsingKeyboard)
@@ -97,6 +121,21 @@ public static class InputManager
 	}
     #endregion
     #region Gamepad
+    static bool getGamePadRun()
+    {
+        return GamePad.GetButton(GamePad.Button.RightShoulder, GamePad.Index.Any);
+    }
+
+    static bool getGamePadRunUp()
+    {
+        return GamePad.GetButtonUp(GamePad.Button.RightShoulder, GamePad.Index.Any);
+    }
+
+    static bool getGamePadRunDown()
+    {
+        return GamePad.GetButtonDown(GamePad.Button.RightShoulder, GamePad.Index.Any);
+    }
+
     static bool getGamePadJump()
     {
         return GamePad.GetButton(GamePad.Button.A, GamePad.Index.Any);
@@ -153,6 +192,22 @@ public static class InputManager
 	}
     #endregion
     #region Keyboard
+
+    static bool getKeyboardRun()
+    {
+        return Input.GetKey(KeyCode.LeftShift);
+    }
+
+    static bool getKeyboardRunUp()
+    {
+        return Input.GetKeyUp(KeyCode.LeftShift);
+    }
+
+    static bool getKeyboardRunDown()
+    {
+        return Input.GetKeyDown(KeyCode.LeftShift);
+    }
+
     static bool getKeyboardJump()
     {
         return Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow);

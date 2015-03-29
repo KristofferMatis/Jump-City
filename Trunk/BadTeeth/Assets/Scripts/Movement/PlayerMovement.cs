@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
         set { m_FullStop = value; }
     }
 
+    public float RUN_SPEED = 500.0f;
+
     #endregion
 
     Stamina m_Stamina;
@@ -165,10 +167,17 @@ public class PlayerMovement : MonoBehaviour
 
 		m_Velocity.y -= Time.deltaTime * GRAVITY;
 
-		if(m_IsAllowedToMove)
-        	m_Velocity.x = GROUNDED_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
-		else
-			m_Velocity.x = 0.0f;
+        int runCost = (int)((float)Constants.RUN_COST * Time.deltaTime);
+
+        if (!(InputManager.getRun() && m_Stamina.stamina > runCost))
+        {
+            m_Velocity.x = GROUNDED_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
+        }
+        else
+        {
+            m_Stamina.stamina -= runCost;
+            m_Velocity.x = RUN_SPEED * InputManager.getMovement() * Time.deltaTime;
+        }
     }
 
     void exitGrounded()
@@ -224,10 +233,15 @@ public class PlayerMovement : MonoBehaviour
 
         m_Velocity.y -= Time.deltaTime * GRAVITY;
 
-		if(m_IsAllowedToMove)
-        	m_Velocity.x = AIRBORNE_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
-		else
-			m_Velocity.x = 0.0f;
+        if (m_IsAllowedToMove)
+        {
+            if(!InputManager.getRun())
+            m_Velocity.x = AIRBORNE_MOVE_SPEED * InputManager.getMovement() * Time.deltaTime;
+        }
+        else
+        {
+            m_Velocity.x = 0.0f;
+        }
     }
 
     void exitAirborne()
