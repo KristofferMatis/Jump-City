@@ -446,11 +446,12 @@ public class Police : MonoBehaviour, IHitBoxListener
 			break;
 			
 		case PoliceState.e_Patrolling:
+			
+			RaycastHit hitInfo;
+
 			if((m_CollisionFlags & CollisionFlags.Sides) != 0)
 			{
 				float playerDirection = Mathf.Sign(m_Player.transform.position.x - transform.position.x);
-
-				RaycastHit hitInfo;
 
 				if(m_CanClimb && Mathf.Sign (m_CurrentForward.x) == playerDirection && Physics.Raycast(transform.position + 0.3f * transform.up, m_CurrentForward, out hitInfo))
 				{
@@ -461,6 +462,12 @@ public class Police : MonoBehaviour, IHitBoxListener
 						EnterClimb ();
 					}
 				}
+			}
+			else if(Physics.Raycast(transform.position , -transform.up, out hitInfo, 0.2f))
+			{
+				Vector3 newPosition = transform.position;
+				newPosition.y = hitInfo.point.y + 0.1f;
+				transform.position = newPosition;
 			}
 			else if((m_CollisionFlags & CollisionFlags.Below) == 0)
 			{
