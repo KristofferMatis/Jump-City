@@ -410,11 +410,20 @@ public class Police : MonoBehaviour, IHitBoxListener
 			{
 				float playerDirection = Mathf.Sign(m_Player.transform.position.x - transform.position.x);
 
-				if(m_CanClimb && Mathf.Sign (m_CurrentForward.x) == playerDirection && Physics.Raycast(transform.position + 0.3f * transform.up, m_CurrentForward))
-				{
-					m_CurrentState = PoliceState.e_Climbing;
+				RaycastHit hitInfo;
 
-					EnterClimb ();
+				if(m_CanClimb && Mathf.Sign (m_CurrentForward.x) == playerDirection && Physics.Raycast(transform.position + 0.3f * transform.up, m_CurrentForward, out hitInfo))
+				{
+					Ladder ladder = hitInfo.collider.GetComponent<Ladder>();
+
+					if(ladder)
+					{
+						ladder.CreateLadder();
+
+						m_CurrentState = PoliceState.e_Climbing;
+
+						EnterClimb ();
+					}
 				}
 			}
 			else if((m_CollisionFlags & CollisionFlags.Below) == 0)
@@ -555,6 +564,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 		EnterKnockback ();
 
 		m_CurrentSpeed = knockbackSpeed;
+
+		m_CurrentForward.x = - Mathf.Sign (m_CurrentSpeed.x);
 
 		return result;
 	}
