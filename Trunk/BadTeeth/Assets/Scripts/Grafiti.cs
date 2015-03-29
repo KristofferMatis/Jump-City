@@ -12,7 +12,9 @@ public class Grafiti : MonoBehaviour , CallBack
 	float savedProgress = 0.0f;
 
     PlayerAnimator m_Animator;
-    bool m_DoneShaking = false;
+	bool m_DoneShaking = false;
+
+	public ParticleSystem m_PaintParticles;
 
 	AudioSource m_Source;
 	
@@ -43,6 +45,7 @@ public class Grafiti : MonoBehaviour , CallBack
             m_PlayerMovement.FullStop = false;
             m_Animator.playAnimation(PlayerAnimator.Animations.BlankMisc);
 
+			m_PaintParticles.Stop ();
             m_Source.Stop();
             return;
         }
@@ -58,6 +61,9 @@ public class Grafiti : MonoBehaviour , CallBack
                     transform.forward = new Vector3(0.0f, 0.0f, 1.0f);
                     m_Animator.playAnimation(PlayerAnimator.Animations.Spray_Billboard);
                     m_PlayerMovement.FullStop = true;
+
+					
+					m_PaintParticles.Play ();
                 }
                 else
                 {
@@ -83,6 +89,8 @@ public class Grafiti : MonoBehaviour , CallBack
             m_DoneShaking = false;
             m_PlayerMovement.FullStop = false;
             m_Animator.playAnimation(PlayerAnimator.Animations.BlankMisc);
+
+			m_PaintParticles.Stop ();
         }
 	}
 
