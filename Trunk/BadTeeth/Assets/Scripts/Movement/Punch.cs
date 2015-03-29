@@ -22,8 +22,12 @@ public class Punch : MonoBehaviour, IHitBoxListener
 	Stamina m_Stamina;
     PlayerAnimator m_Animator;
 
+    public AudioClip[] m_PunchClips;
+    AudioSource m_Source;
 	void Start()
 	{
+        m_Source = gameObject.AddComponent<AudioSource>();
+
 		m_HitBox = GetComponentInChildren<HitBox> ();
 		m_HitBox.RegisterListener(this);
 		m_HitBox.gameObject.SetActive(false);
@@ -55,7 +59,7 @@ public class Punch : MonoBehaviour, IHitBoxListener
 			m_HitBox.gameObject.SetActive(true);
 
 			m_Stamina.stamina -= Constants.PUNCH_COST;
-
+            
 			if(m_Combo == 0)
 				m_Animator.playAnimation(PlayerAnimator.Animations.Punch2);
 			else
@@ -87,8 +91,9 @@ public class Punch : MonoBehaviour, IHitBoxListener
 			Vector3 newPosition = m_HitParticles.transform.position;
 			newPosition.z = -0.5f;
 			m_HitParticles.transform.position = newPosition;
-			
+            m_Source.PlayOneShot(m_PunchClips[Random.Range(0, m_PunchClips.Length)]);
 			m_HitParticles.Play ();
+
 
 			if(hasActuallyHit && !m_CanHitMultipleEnemies)
 			{
