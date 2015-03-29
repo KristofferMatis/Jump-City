@@ -86,6 +86,9 @@ public class Police : MonoBehaviour, IHitBoxListener
     public AudioClip[] AttackClips;
     AudioSource m_Source;
 
+    const float patrolSoundTime = 5.0f;
+    float m_timer = 0.0f;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -111,6 +114,8 @@ public class Police : MonoBehaviour, IHitBoxListener
 	// Update is called once per frame
 	void Update () 
 	{
+        if (m_timer < patrolSoundTime)
+            m_timer += Time.deltaTime;
 		//Debug.Log (m_CurrentState);
 		//Debug.Log (m_CurrentSpeed);
 
@@ -190,7 +195,11 @@ public class Police : MonoBehaviour, IHitBoxListener
 	void EnterPatrol()
 	{
 		m_CurrentSpeed.x = m_CurrentForward.x * m_PatrolSpeed;
-        m_Source.PlayOneShot(m_EnterPatrol[Random.Range(0, m_EnterPatrol.Length)]);
+        if (m_timer > patrolSoundTime)
+        {
+            m_timer = 0.0f;
+            m_Source.PlayOneShot(m_EnterPatrol[Random.Range(0, m_EnterPatrol.Length)]);
+        }
 		m_Animation.Play ("Run");
 	}
 
