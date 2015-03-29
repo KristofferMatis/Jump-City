@@ -87,6 +87,14 @@ public static class InputManager
         else
             return getGamePadMovement();
     }
+
+	public static bool getPunchDown()
+	{
+		if (IsUsingKeyboard)
+			return getKeyboardPunchDown();
+		else
+			return getGamePadPunchDown();
+	}
     #endregion
     #region Gamepad
     static bool getGamePadJump()
@@ -138,6 +146,11 @@ public static class InputManager
     {
         return GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.Any).x;
     }
+
+	static bool getGamePadPunchDown()
+	{
+		return GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.Any);
+	}
     #endregion
     #region Keyboard
     static bool getKeyboardJump()
@@ -199,5 +212,10 @@ public static class InputManager
         }
         return input;
     }
+
+	static bool getKeyboardPunchDown()
+	{
+		return Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.Alpha3);
+	}
     #endregion
 }

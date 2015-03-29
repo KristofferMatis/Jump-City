@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Police : MonoBehaviour, IHitBoxListener
 {
-	public HitBox m_HitBox;
+	HitBox m_HitBox;
 
 	public float m_DiveSpeed;
 	public float m_PatrolSpeed;
@@ -86,12 +86,9 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 		m_CurrentForward = Vector3.back;
 
-		if(m_HitBox)
-		{
-			m_HitBox.RegisterListener(this);
-
-			m_HitBox.gameObject.SetActive(false);
-		}
+		m_HitBox = GetComponentInChildren<HitBox> ();
+		m_HitBox.RegisterListener(this);
+		m_HitBox.gameObject.SetActive(false);
 
 		m_HitParticles = GetComponentInChildren<ParticleSystem> ();
 	}
@@ -483,7 +480,7 @@ public class Police : MonoBehaviour, IHitBoxListener
 
 		if(!m_HasHitPlayer && player)
 		{
-			player.knockback(m_CurrentForward * m_DiveKnockbackHorizontalForce + transform.up * m_DiveKnockbackVerticalForce, m_DiveStaminaHit);
+			player.knockback(m_CurrentForward * m_DiveKnockbackHorizontalForce + transform.up * m_DiveKnockbackVerticalForce, m_DiveStaminaHit, 0.5f);
 
 			m_HasHitPlayer = true;
 
@@ -506,12 +503,21 @@ public class Police : MonoBehaviour, IHitBoxListener
 		}
 	}
 
-	public void Knockback(Vector3 knockbackSpeed)
+	public bool Knockback(Vector3 knockbackSpeed)
 	{
+		bool result = true;
+
+		if(m_CurrentState == PoliceState.e_Knockback)
+		{
+			result = false;
+		}
+
 		m_CurrentState = PoliceState.e_Knockback;
 
 		EnterKnockback ();
 
 		m_CurrentSpeed = knockbackSpeed;
+
+		return result;
 	}
 }
