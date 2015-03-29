@@ -26,7 +26,7 @@ public class GameManager
 
 	GameManager()
 	{
-		ThreatLevel = 0.1f;
+
 	}
 
 	public void AddThreat(float threatIncrement)
