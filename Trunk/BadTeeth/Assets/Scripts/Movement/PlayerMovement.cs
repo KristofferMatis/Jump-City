@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour 
+public class PlayerMovement : MonoBehaviour , CallBack
 {
 	CharacterController m_Controller;
 	
@@ -74,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerAnimator m_Animator;
 
+	int m_KnocbackForwardX;
+
     // Use this for initialization
 	void Start () 
 	{
@@ -81,8 +83,18 @@ public class PlayerMovement : MonoBehaviour
 		m_GroundedRaycastIgnoreMask = LayerMask.GetMask("Player", "Ignore Raycast");
         m_Stamina = gameObject.GetComponent<Stamina>();
         m_Animator = gameObject.GetComponent<PlayerAnimator>();
+
+		GetComponentInChildren<AnimationCallBackManager> ().registerCallBack (this);
 	}
-	
+
+	public void CallBack(CallBackEvents callBack)
+	{
+		if(callBack == CallBackEvents.KnockBack_Done)
+		{
+			m_KnocbackForwardX = 0;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -119,9 +131,9 @@ public class PlayerMovement : MonoBehaviour
         m_Controller.Move((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime);
         transform.forward = new Vector3(m_Velocity.x, 0.0f, (m_Velocity.x != 0.0f) ? 0.0f : -1.0f);
 
-		if(m_FinalKnockBackMovement.x != 0.0f)
+		if(m_KnocbackForwardX != 0)
 		{
-			transform.forward = - Vector3.right * Mathf.Sign (m_FinalKnockBackMovement.x);
+			transform.forward = Vector3.right * m_KnocbackForwardX;
 		}
 
         m_Animator.setSpeed(((m_Velocity + m_ExternalMovement + m_FinalKnockBackMovement) * Time.deltaTime).magnitude);
@@ -359,6 +371,8 @@ public class PlayerMovement : MonoBehaviour
         m_KnockBackMovement.Add(new knockBackMovement(velocity, time));
 		m_Stamina.stamina -= staminaHit;
         m_Animator.playAnimation(PlayerAnimator.Animations.Knockback);
+
+		m_KnocbackForwardX = (int) - Mathf.Sign (velocity.x);
 
 		if(m_Stamina.stamina == 0)
 		{

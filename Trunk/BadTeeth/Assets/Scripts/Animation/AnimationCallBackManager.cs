@@ -6,7 +6,8 @@ using System.Collections.Generic;
 public enum CallBackEvents
 {
     Drink_Done,
-    Shake_Done
+    Shake_Done,
+	KnockBack_Done
 };
 
 public interface CallBack
@@ -19,7 +20,8 @@ public class AnimationCallBackManager : MonoBehaviour
     string[] m_Events = new string[]
     {
         "Drink_Done",
-        "Shake_Done"
+        "Shake_Done",
+		"KnockBack_Done"
     };
 
     protected List<CallBack> m_Listeners = new List<CallBack>();
